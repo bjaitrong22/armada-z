@@ -21,13 +21,12 @@ class Layer {
 export class Background {
   constructor(game) {
     this.game = game;
-    this.width = 800;
-    this.height = 800;
+    this.width = 3072;
+    this.height = 1536;
     this.layerImage1 = document.getElementById('layer1');
     this.layerImage2 = document.getElementById('layer2');
-    this.layerImage3 = document.getElementById('layer3');
-    this.layer1 = new Layer(this.game, this.width, this.height, .2, this.layerImage1);
-    this.layer2 = new Layer(this.game, this.width, this.height, .4, this.layerImage2);
+    this.layer1 = new Layer(this.game, this.width, this.height, .01, this.layerImage1);
+    this.layer2 = new Layer(this.game, this.width, this.height, .04, this.layerImage2);
     this.backgroundLayers = [this.layer1, this.layer2];
   }
   update() {
