@@ -28,7 +28,7 @@ export class Player {
     this.x += this.dx;
     if (input.includes('ArrowRight')) this.dx = this.maxDx;
     else if (input.includes('ArrowLeft')) this.dx = -this.maxDx;
-    else this.speed = 0;
+    else this.dx = 0;
 
     //sprite animation
     if (this.frameTimer > this.frameInterval) {
