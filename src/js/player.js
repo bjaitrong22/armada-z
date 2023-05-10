@@ -1,4 +1,5 @@
 import { Floating, HorizontalTravel,VerticalTravel } from "./playerStates";
+import engine1 from './../assets/audioEffects/ScatterNoise1.mp3';
 
 export class Player {
   constructor(game){
@@ -20,13 +21,22 @@ export class Player {
     this.maxDy = 5;
     this.states = [new Floating(this.game), new HorizontalTravel(this.game), new VerticalTravel(this.game)];
     this.currentState = null;
-    
+    this.sound = new Audio(engine1);
+
   }
   update(input, deltaTime){
     this.currentState.handleInput(input);
+
+    //engine thruster sound
+    if (this.dy !== 0 || this.dx !== 0) this.sound.play();
+    else this.sound.pause();
+
     //horizontal movement
     this.x += this.dx;
-    if (input.includes('ArrowRight')) this.dx = this.maxDx;
+    if (input.includes('ArrowRight')){
+      console.log(this.sound);
+      this.dx = this.maxDx;
+    } 
     else if (input.includes('ArrowLeft')) this.dx = -this.maxDx;
     else this.dx = 0;
 
