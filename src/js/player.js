@@ -40,6 +40,10 @@ export class Player {
     else if (input.includes('ArrowDown')) this.dy = this.maxDy;
     else this.dy = 0;
 
+    // vertical boundaries
+    if (this.y < 0) this.y = 0;
+    if (this.y > this.game.height - this.height) this.y = this.game.height - this.height;
+
     //sprite animation
     if (this.frameTimer > this.frameInterval) {
       this.frameTimer = 0;
