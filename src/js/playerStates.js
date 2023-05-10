@@ -1,6 +1,6 @@
 const states = {
   FLOATING: 0,
-  MOVING:1
+  HORIZONTAL_TRAVEL:1
 };
 
 class State {
@@ -21,14 +21,14 @@ export class Floating extends State {
   }
   handleInput(input){
     if (input.includes('ArrowLeft') || input.includes('ArrowRight')){
-      this.game.player.setState(states.MOVING, 1);
+      this.game.player.setState(states.HORIZONTAL_TRAVEL, 1);
     }
   }
 }
 
-export class Moving extends State {
+export class HorizontalTravel extends State {
   constructor(game){
-    super('MOVING', game);
+    super('HORIZONTAL_TRAVEL', game);
   }
   enter() {
     this.game.player.frameX = 0;

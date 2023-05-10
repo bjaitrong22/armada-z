@@ -1,4 +1,4 @@
-import { Floating, Moving } from "./playerStates";
+import { Floating, HorizontalTravel } from "./playerStates";
 
 export class Player {
   constructor(game){
@@ -18,7 +18,7 @@ export class Player {
     this.dy = 0;
     this.maxDx = 5;
     this.maxDy = 0;
-    this.states = [new Floating(this.game), new Moving(this.game)];
+    this.states = [new Floating(this.game), new HorizontalTravel(this.game)];
     this.currentState = null;
     
   }
