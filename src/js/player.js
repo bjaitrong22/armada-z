@@ -30,6 +30,10 @@ export class Player {
     else if (input.includes('ArrowLeft')) this.dx = -this.maxDx;
     else this.dx = 0;
 
+    // horizontal boundaries
+    if (this.x < 0) this.x = 0;
+    if (this.x > this.game.width - this.width) this.x = this.game.width - this.width;
+
     //sprite animation
     if (this.frameTimer > this.frameInterval) {
       this.frameTimer = 0;
