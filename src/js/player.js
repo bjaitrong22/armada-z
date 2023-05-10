@@ -1,4 +1,4 @@
-import { Floating, HorizontalTravel } from "./playerStates";
+import { Floating, HorizontalTravel,VerticalTravel } from "./playerStates";
 
 export class Player {
   constructor(game){
@@ -17,8 +17,8 @@ export class Player {
     this.dx = 0;
     this.dy = 0;
     this.maxDx = 5;
-    this.maxDy = 0;
-    this.states = [new Floating(this.game), new HorizontalTravel(this.game)];
+    this.maxDy = 5;
+    this.states = [new Floating(this.game), new HorizontalTravel(this.game), new VerticalTravel(this.game)];
     this.currentState = null;
     
   }
@@ -33,6 +33,12 @@ export class Player {
     // horizontal boundaries
     if (this.x < 0) this.x = 0;
     if (this.x > this.game.width - this.width) this.x = this.game.width - this.width;
+
+    // vertical movement
+    this.y += this.dy;
+    if (input.includes('ArrowUp')) this.dy -= this.maxDy;
+    else if (input.includes('ArrowDown')) this.dy = this.maxDy;
+    else this.dy = 0;
 
     //sprite animation
     if (this.frameTimer > this.frameInterval) {
