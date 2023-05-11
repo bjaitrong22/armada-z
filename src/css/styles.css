@@ -14,7 +14,7 @@
   max-height: 100%;
 }
 
-#layer1, #layer2, #layer3, #player_ship {
+.hidden {
   display: none;
 }
 
