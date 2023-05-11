@@ -62,6 +62,9 @@ export class VerticalTravel extends State {
     this.game.player.frameY = 0;
   }
   handleInput(input){
+    if(input.includes('ArrowUp') || input.includes('ArrowDown')){
+      this.game.particles.unshift(new Fire(this.game, this.game.player.x, this.game.player.y + this.game.player.height * 0.5));
+    }
     if (input.includes('ArrowLeft') || input.includes('ArrowRight')){
       this.game.player.setState(states.HORIZONTAL_TRAVEL, 1);
     } else if (input.includes('Enter')){
