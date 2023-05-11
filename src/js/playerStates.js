@@ -1,3 +1,5 @@
+import { Fire } from "./particles.js"; 
+
 const states = {
   FLOATING: 0,
   HORIZONTAL_TRAVEL: 1,
@@ -39,6 +41,9 @@ export class HorizontalTravel extends State {
     this.game.player.frameY = 0;
   }
   handleInput(input){
+    if(input.includes('ArrowRight')){
+      this.game.particles.unshift(new Fire(this.game, this.game.player.x, this.game.player.y + this.game.player.height * 0.5));
+    }
     if (input.includes('ArrowUp') || input.includes('ArrowDown')){
       this.game.player.setState(states.VERTICAL_TRAVEL, 1);
     } else if (input.includes('Enter')){

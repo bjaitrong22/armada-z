@@ -28,8 +28,9 @@ export class Player {
     this.currentState.handleInput(input);
 
     //engine thruster sound
-    if (this.dy !== 0 || this.dx !== 0) this.sound.play();
-    else this.sound.pause();
+    if (this.dy !== 0 || this.dx !== 0){
+      this.sound.play();
+    } else this.sound.pause();
 
     //horizontal movement
     this.x += this.dx;

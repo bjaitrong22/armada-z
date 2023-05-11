@@ -13,6 +13,7 @@ export class Game {
     this.background = new Background(this);
     this.player = new Player(this);
     this.input = new InputHandler(this);
+    this.particles = [];
     this.debug = false;
     this.time = 0;
     this.player.currentState =  this.player.states[0];
@@ -22,9 +23,16 @@ export class Game {
     this.time += deltaTime;
     this.background.update();
     this.player.update(this.input.keys, deltaTime);
+    this.particles.forEach((particle, index) => {
+      particle.update();
+    });
+    this.particles = this.particles.filter( particle => !particle.markedForDeletion);
   }
   draw(context) {
     this.background.draw(context);
     this.player.draw(context);
+    this.particles.forEach(particle => {
+      particle.draw(context);
+    });
   }
 }
