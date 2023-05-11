@@ -47,7 +47,7 @@ export class Player {
 
     // vertical movement
     this.y += this.dy;
-    if (input.includes('ArrowUp')) this.dy -= this.maxDy;
+    if (input.includes('ArrowUp')) this.dy = -this.maxDy;
     else if (input.includes('ArrowDown')) this.dy = this.maxDy;
     else this.dy = 0;
 
