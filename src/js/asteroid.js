@@ -7,10 +7,10 @@ export class Asteroid {
     this.image = document.getElementById('asteroid');
     this.width = 150;
     this.height = 155;
-    this.speed = Math.random() * 1.5 + 0.1;
+    this.speed = Math.random()* 1.5 + 0.3;
     this.free = true;
     this.angle = 0;
-    this.angularVelocity = Math.random() * 0.02 - 0.01;
+    this.angularVelocity = Math.random() * 0.03 - 0.01;
   }
   update(){
     if(!this.free){
@@ -25,7 +25,7 @@ export class Asteroid {
     if (!this.free){
       context.save();
       context.translate(this.x, this.y);
-      context.rotate(this.angele);
+      context.rotate(this.angle);
       context.drawImage(this.image, -this.width * 0.5, -this.height * 0.5, this.width, this.height);
       context.restore(); 
     }
