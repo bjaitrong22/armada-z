@@ -14,7 +14,7 @@ export class Game {
     this.asteroidPool = [];
     this.maxAsteroid = 30;
     this.asteroidTimer = 0;
-    this.asteroidInterval = 1000;
+    this.asteroidInterval = 3000;
     this.createAsteroidPool();
     this.particles = [];
     this.priorKey = [];
