@@ -17,9 +17,9 @@ window.addEventListener('load', function(){
   function animate(timeStamp) {
     const deltaTime = timeStamp - lastTime;
     lastTime = timeStamp;
-    ctx.clearRect(0,0, canvas.width, canvas.height);
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
     game.update(deltaTime);
-    game.draw(ctx);
+    game.draw(ctx, deltaTime);
     requestAnimationFrame(animate);
   }
 
