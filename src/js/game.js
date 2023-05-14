@@ -21,7 +21,6 @@ export class Game {
     this.destroyerTimer = 0;
     this.destroyerInterval = 2500;
     this.particles = [];
-    this.priorKey = [];
     this.background = new Background(this);
     this.player = new Player(this);
     this.input = new InputHandler(this);
@@ -60,7 +59,7 @@ export class Game {
     this.player.update(this.input.keys, deltaTime);
     
     // Particles/Thrusters conditions for horizontal movement
-    if (this.input.keys.includes('ArrowLeft') && !(this.input.keys.includes('ArrowRight'))){
+    if (this.input.keys.includes('ArrowLeft') && !this.input.keys.includes('ArrowRight')){
       this.particles.forEach((particle) => {
         particle.updateReverseThruster();
       });
