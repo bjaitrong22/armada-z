@@ -3,7 +3,7 @@ import { Background } from "./background.js";
 import { Player } from "./player.js";
 import { InputHandler } from "./input.js";
 import { Asteroid } from "./asteroid.js";
-import { Destroyer } from "./enemies.js";
+import { Destroyer, DragonCannon} from "./enemies.js";
 
 export class Game {
   constructor( width, height) {
@@ -16,6 +16,10 @@ export class Game {
     this.maxAsteroid = 30;
     this.asteroidTimer = 0;
     this.asteroidInterval = 3000;
+    this.dragonCannonPool = [];
+    this.maxDragonCannon = 2;
+    this.dragonCannonTimer = 0;
+    this.dragonCannonInterval = 6000;
     this.destroyerPool = [];
     this.maxDestroyer = 50;
     this.destroyerTimer = 0;
@@ -30,6 +34,7 @@ export class Game {
     this.player.currentState.enter();
     this.createAsteroidPool();
     this.createDestroyerPool();
+    this.createDragonCannonPool();
   }
   createAsteroidPool(){
     for (let i = 0; i < this.maxAsteroid; i++){
@@ -44,6 +49,16 @@ export class Game {
       }
     }
   }
+  createDragonCannonPool(){
+    for (let i = 0; i < this.maxDragonCannon; i++){
+      this.dragonCannonPool.push(new DragonCannon(this));
+    }
+  }
+  getDragonCannon(){
+    for (let i = 0; i < this.dragonCannonPool.length; i++){
+      if (this.dragonCannonPool[i].free) return this.dragonCannonPool[i];
+    }
+  }
   createDestroyerPool(){
     for (let i = 0; i < this.maxDestroyer; i++){
       this.destroyerPool.push(new Destroyer(this));
@@ -51,7 +66,7 @@ export class Game {
   }
   getDestroyer(){
     for (let i = 0; i < this.destroyerPool.length; i++){
-      if(this.destroyerPool[i].free) return this.destroyerPool[i];
+      if (this.destroyerPool[i].free) return this.destroyerPool[i];
     }
   }
   update(deltaTime) {
@@ -85,7 +100,7 @@ export class Game {
     });
   }
 
-    this.particles = this.particles.filter( particle => !particle.markedForDeletion);
+  this.particles = this.particles.filter( particle => !particle.markedForDeletion);
   }
   render(context, deltaTime){
     this.background.draw(context);
@@ -103,7 +118,21 @@ export class Game {
       asteroid.draw(context);
       asteroid.update();
     });
-  
+
+    // Periodically creates dragonCannon ships
+    if (this.dragonCannonTimer > this.dragonCannonInterval){
+      const dragonCannon = this.getDragonCannon();
+      if (dragonCannon) dragonCannon.start();
+      this.dragonCannonTimer = 0;
+    }else {
+      this.dragonCannonTimer += deltaTime;
+    }
+
+    this.dragonCannonPool.forEach(dragonCannon => {
+      dragonCannon.draw(context);
+      dragonCannon.update(deltaTime);
+    });
+
     // Periodically creates destroyers
     if (this.destroyerTimer > this.destroyerInterval){
       const destroyer = this.getDestroyer();

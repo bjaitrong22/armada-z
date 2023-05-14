@@ -27,7 +27,7 @@ class Enemy {
   }
   draw(context) {
     if (!this.free){
-      if (this.game.debug) context.strokeRect(this.x, this.y, this.width, this.height);
+      if (this.game.debug) context.strokeRect(this.x + (this.width * .10), this.y + (this.height * .40), this.width * .73, this.height * .18);
       context.drawImage(this.image, this.frameX * this.width, 0, this.width, this.height, this.x, this.y, this.width, this.height);
     }
   }
@@ -53,5 +53,19 @@ export class Destroyer extends Enemy {
     this.dY = 0;
     this.MaxFrame = 0;
     this.image = document.getElementById('destroyer');
+  }
+}
+export class DragonCannon extends Enemy {
+  constructor(game){
+    super();
+    this.game = game;
+    this.width = 228;
+    this.height = 139;
+    this.x = this.game.width + Math.random() * this.game.width * 0.5;
+    this.y = Math.random() * this.game.height * 0.5;
+    this.dX = Math.random() + 0.5;
+    this.dY = 0;
+    this.MaxFrame = 0;
+    this.image = document.getElementById('dragonCannon');
   }
 }
