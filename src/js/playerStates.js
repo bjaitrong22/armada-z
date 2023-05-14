@@ -45,7 +45,7 @@ export class HorizontalTravel extends State {
     if(input.includes('ArrowRight')){
       this.game.particles.unshift(new Fire(this.game, this.game.player.x + this.game.player.width * .16, this.game.player.y + this.game.player.height * 0.5));
     }
-    if(input.includes('ArrowLeft')){
+    if(input.includes('ArrowLeft') || input.includes('ArrowLeft')){
       this.game.particles.unshift(new Fire(this.game,this.game.player.x + this.game.player.width * .8, this.game.player.y + this.game.player.height * 0.8));
     }
     if (input.includes('ArrowUp') || input.includes('ArrowDown')){
@@ -65,8 +65,14 @@ export class VerticalTravel extends State {
   }
   handleInput(input){
     if(input.includes('ArrowUp') || input.includes('ArrowDown')){
-      this.game.particles.unshift(new Fire(this.game, this.game.player.x + this.game.player.width * .16, this.game.player.y + this.game.player.height * 0.5));
+      if(input.includes('ArrowLeft'))
+      {
+        this.game.particles.unshift(new Fire(this.game,this.game.player.x + this.game.player.width * .8, this.game.player.y + this.game.player.height * 0.8));
+      } else {
+        this.game.particles.unshift(new Fire(this.game, this.game.player.x + this.game.player.width * .16, this.game.player.y + this.game.player.height * 0.5));
+      }
     }
+    
     if (input.includes('ArrowLeft') || input.includes('ArrowRight')){
       this.game.player.setState(states.HORIZONTAL_TRAVEL, 1);
     } else if (input.includes('Enter')){
