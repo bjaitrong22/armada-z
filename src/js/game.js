@@ -3,6 +3,7 @@ import { Background } from "./background.js";
 import { Player } from "./player.js";
 import { InputHandler } from "./input.js";
 import { Asteroid } from "./asteroid.js";
+import { Destroyer } from "./enemies.js";
 
 export class Game {
   constructor( width, height) {
@@ -15,7 +16,10 @@ export class Game {
     this.maxAsteroid = 30;
     this.asteroidTimer = 0;
     this.asteroidInterval = 3000;
-    this.createAsteroidPool();
+    this.destroyerPool = [];
+    this.maxDestroyer = 50;
+    this.destroyerTimer = 0;
+    this.destroyerInterval = 2500;
     this.particles = [];
     this.priorKey = [];
     this.background = new Background(this);
@@ -25,6 +29,8 @@ export class Game {
     this.time = 0;
     this.player.currentState =  this.player.states[0];
     this.player.currentState.enter();
+    this.createAsteroidPool();
+    this.createDestroyerPool();
   }
   createAsteroidPool(){
     for (let i = 0; i < this.maxAsteroid; i++){
@@ -32,15 +38,25 @@ export class Game {
     }
   }
   getAsteroid(){
-    for(let i = 0; i < this.asteroidPool.length ; i++){
+    for (let i = 0; i < this.asteroidPool.length ; i++){
       if (this.asteroidPool[i].free){
         return this.asteroidPool[i];
+        
       }
+    }
+  }
+  createDestroyerPool(){
+    for (let i = 0; i < this.maxDestroyer; i++){
+      this.destroyerPool.push(new Destroyer(this));
+    }
+  }
+  getDestroyer(){
+    for (let i = 0; i < this.destroyerPool.length; i++){
+      if(this.destroyerPool[i].free) return this.destroyerPool[i];
     }
   }
   update(deltaTime) {
     this.time += deltaTime;
-    this.background.update();
     this.player.update(this.input.keys, deltaTime);
   
     if (this.input.keys.includes('ArrowLeft')){
@@ -79,8 +95,9 @@ export class Game {
     }
     this.particles = this.particles.filter( particle => !particle.markedForDeletion);
   }
-  draw(context, deltaTime){
+  render(context, deltaTime){
     this.background.draw(context);
+    this.background.update();
     
     // Periodically creates asteroids
     if (this.asteroidTimer > this.asteroidInterval){
@@ -94,9 +111,25 @@ export class Game {
       asteroid.draw(context);
       asteroid.update();
     });
+  
+    // Periodically creates destroyers
+    if (this.destroyerTimer > this.destroyerInterval){
+      const destroyer = this.getDestroyer();
+      if (destroyer) destroyer.start();
+      this.destroyerTimer = 0;
+    } else {
+      this.destroyerTimer += deltaTime;
+    }
+
+    this.destroyerPool.forEach(destroyer => {
+      destroyer.draw(context);
+      destroyer.update(deltaTime);
+    });
+
     this.player.draw(context);
     this.particles.forEach(particle => {
       particle.draw(context);
     });
+    this.update(deltaTime);
   }
 }
