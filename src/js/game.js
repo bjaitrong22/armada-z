@@ -58,45 +58,24 @@ export class Game {
   update(deltaTime) {
     this.time += deltaTime;
     this.player.update(this.input.keys, deltaTime);
-  
-    if (this.input.keys.includes('ArrowLeft')){
-      this.priorKey = this.priorKey.filter( key => key !== 'ArrowRight' || key!== 'ArrowUp' || key !== 'ArrowDown');
-      if (this.priorKey.indexOf('ArrowLeft') === -1){
-        this.priorKey.push('ArrowLeft');
-      }
+    
+    // Particles/Thrusters conditions for horizontal movement
+    if (this.input.keys.includes('ArrowLeft') && !(this.input.keys.includes('ArrowRight'))){
       this.particles.forEach((particle) => {
         particle.updateReverseThruster();
       });
-    } else if (this.input.keys.includes('ArrowRight') || this.input.keys.includes('ArrowUp') || this.input.keys.includes('ArrowDown')) {
-      this.priorKey = this.priorKey.filter( key => key !== 'ArrowLeft');
-      if (this.priorKey.indexOf('ArrowRight') === - 1){
-        this.priorKey.push('ArrowRight');
-      }
-      if (this.priorKey.indexOf('ArrowUp') === -1){
-        this.priorKey.push('ArrowUp');
-      }
-      if (this.priorKey.indexOf('ArrowDown') === -1){
-        this.priorKey.push('ArrowDown');
-      }
-      
-      this.particles.forEach((particle) => {
-        particle.updateForwardThruster();
-      });
-    } else if (this.priorKey.includes('ArrowLeft') && this.input.keys.length === 0){
-      this.particles.forEach((particle) => {
-        particle.markedForDeletion = true;
-        this.priorKey = [];
-      });
-      
-    } else if ((this.priorKey.includes('ArrowRight') || this.priorKey.includes('ArrowUp') || this.priorKey.includes('ArrowDown')) && this.input.keys.length === 0 || this.priorKey.includes('ArrowLeft')){
+    } else if (this.input.keys.includes('ArrowRight') || this.input.keys.includes('ArrowUp') || this.input.keys.includes('ArrowDown')){
+        this.particles.forEach((particle) => {
+          particle.updateForwardThruster();
+        });
+    } else {
       this.particles.forEach((particle) => {
       particle.markedForDeletion = true;
-      this.priorKey = [];
-      }); 
+      });
     }
     
     if (this.input.keys.includes('ArrowRight') && this.input.keys.includes('ArrowLeft')){
-      this.particles.forEach((particle) => {
+        this.particles.forEach((particle) => {
         particle.markedForDeletion = true;
       });
     }

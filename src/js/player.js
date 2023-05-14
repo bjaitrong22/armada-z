@@ -34,11 +34,10 @@ export class Player {
 
     //horizontal movement
     this.x += this.dx;
-    if (input.includes('ArrowRight')){
-      console.log(this.sound);
+    if (input.includes('ArrowRight') && !input.includes('ArrowLeft')){  
       this.dx = this.maxDx;
     } 
-    else if (input.includes('ArrowLeft')) this.dx = -this.maxDx;
+    else if (input.includes('ArrowLeft') && !input.includes('ArrowRight')) this.dx = -this.maxDx;
     else this.dx = 0;
 
     // horizontal boundaries
