@@ -39,6 +39,7 @@ export class Player {
     } 
     else if (input.includes('ArrowLeft') && !input.includes('ArrowRight')) this.dx = -this.maxDx;
     else this.dx = 0;
+    
 
     // horizontal boundaries
     if (this.x < 0) this.x = 0;
@@ -46,10 +47,12 @@ export class Player {
 
     // vertical movement
     this.y += this.dy;
-    if (input.includes('ArrowUp')) this.dy = -this.maxDy;
-    else if (input.includes('ArrowDown')) this.dy = this.maxDy;
-    else this.dy = 0;
-
+    if (input.includes('ArrowUp') && !input.includes('ArrowDown')){
+      this.verticalMovementSettings(input);
+    } else if (input.includes('ArrowDown') && !input.includes('ArrowUp')){ 
+      this.verticalMovementSettings(input);
+    } else this.dy = 0;
+    
     // vertical boundaries
     if (this.y < 0) this.y = 0;
     if (this.y > this.game.height - this.height) this.y = this.game.height - this.height;
@@ -72,5 +75,13 @@ export class Player {
     this.currentState = this.states[state];
     this.game.speed = this.game.maxSpeed * dx;
     this.currentState.enter();
+  }
+  verticalMovementSettings(input){
+    if(input.includes('ArrowLeft') && input.includes('ArrowRight')){
+      this.dy = 0;
+    } else {
+      if(input.includes('ArrowUp')) this.dy = -this.maxDy;
+      else this.dy = this.maxDy;
+    }
   }
 }

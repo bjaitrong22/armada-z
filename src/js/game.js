@@ -79,6 +79,12 @@ export class Game {
       });
     }
 
+    if (this.input.keys.includes('ArrowUp') && this.input.keys.includes('ArrowDown')){
+      this.particles.forEach((particle) => {
+      particle.markedForDeletion = true;
+    });
+  }
+
     this.particles = this.particles.filter( particle => !particle.markedForDeletion);
   }
   render(context, deltaTime){
