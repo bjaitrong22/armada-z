@@ -3,10 +3,16 @@ class Particle {
     this.game = game;
     this.markedForDeletion = false;
   }
-  update(){
+  updateForwardThruster(){
     this.x -= this.dx + this.game.speed;
     this.y -= this.dy;
-    if (this.size < 15) this.markedForDeletion = true;
+    if (this.x < (this.game.player.x - 15)) this.markedForDeletion = true;
+  }
+  updateReverseThruster(){
+    this.x += this.dx + this.game.speed;
+    this.y += this.dy;
+    if (this.x > this.game.player.x + this.game.player.width) this.markedForDeletion = true;
+    if (this.x < 0 || this.x > this.game.width) this.markedForDeletion = true;
   }
 }
 
@@ -14,7 +20,7 @@ export class Dust extends Particle {
   constructor(game, x, y){
     super(game);
     this.game = game;
-    this.size = Math.random() * 20 + 10;
+    this.size = Math.random() * 5 + 10;
     this.x = x;
     this.y = y;
     this.dx = Math.random();
@@ -35,7 +41,7 @@ export class Splash extends Particle {
     this.size = Math.random() * 100 + 100;
     this.x = x - this.size * 0.4;
     this.y = y - this.size * 0.5;
-    this.dx = Math.random() * 6 - 3;
+    this.dx = Math.random() * 1 - .5;
     this.dy = Math.random() * 2 + 2;
     this.kineticForce = 0;
     this.image = document.getElementById('fire');
@@ -54,10 +60,10 @@ export class Fire extends Particle {
   constructor(game, x, y){
     super(game);
     this.image = document.getElementById('fire');
-    this.size = Math.random() * 50;
-    this.x = x + 25;
-    this.y = y - 5;
-    this.dx = 10;
+    this.size = Math.random() * 70 + 3;
+    this.x = x;
+    this.y = y - 8;
+    this.dx = 8;
     this.dy = 0;
     this.angle = 0;
     this.angularVelocity = Math.random() * 0.2 - 0.1;

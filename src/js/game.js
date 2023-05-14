@@ -84,15 +84,23 @@ export class Game {
       });
     } else if (this.priorKey.includes('ArrowLeft') && this.input.keys.length === 0){
       this.particles.forEach((particle) => {
-        particle.updateReverseThruster();
+        particle.markedForDeletion = true;
+        this.priorKey = [];
       });
       
-    } else if ((this.priorKey.includes('ArrowRight') || this.priorKey.includes('ArrowUp') || this.priorKey.includes('ArrowDown')) && this.input.keys.length ===0){
+    } else if ((this.priorKey.includes('ArrowRight') || this.priorKey.includes('ArrowUp') || this.priorKey.includes('ArrowDown')) && this.input.keys.length === 0 || this.priorKey.includes('ArrowLeft')){
       this.particles.forEach((particle) => {
-      particle.updateForwardThruster();
-      });
-      
+      particle.markedForDeletion = true;
+      this.priorKey = [];
+      }); 
     }
+    
+    if (this.input.keys.includes('ArrowRight') && this.input.keys.includes('ArrowLeft')){
+      this.particles.forEach((particle) => {
+        particle.markedForDeletion = true;
+      });
+    }
+
     this.particles = this.particles.filter( particle => !particle.markedForDeletion);
   }
   render(context, deltaTime){
