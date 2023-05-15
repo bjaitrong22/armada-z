@@ -13,8 +13,7 @@ window.addEventListener('load', function(){
   window.addEventListener("resize", function(){
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
-    game.width= canvas.width;
-    game.height= canvas.height;
+    game.setGameDimensions(canvas.width, canvas.height);
   });
 
   const game = new Game(canvas.width, canvas.height);
