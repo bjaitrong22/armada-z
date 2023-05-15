@@ -10,9 +10,16 @@ window.addEventListener('load', function(){
   canvas.width = window.innerWidth;
   canvas.height = window.innerHeight;
 
-  
+  window.addEventListener("resize", function(){
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+    game.width= canvas.width;
+    game.height= canvas.height;
+  });
+
   const game = new Game(canvas.width, canvas.height);
   let lastTime = 0;
+  
 
   function animate(timeStamp) {
     const deltaTime = timeStamp - lastTime;

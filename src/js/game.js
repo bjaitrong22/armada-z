@@ -36,6 +36,10 @@ export class Game {
     this.createDestroyerPool();
     this.createDragonCannonPool();
   }
+  setGameDimensions(width, height){
+    this.width = width;
+    this.height = height;
+  }
   createAsteroidPool(){
     for (let i = 0; i < this.maxAsteroid; i++){
       this.asteroidPool.push(new Asteroid(this));
@@ -79,28 +83,28 @@ export class Game {
         particle.updateReverseThruster();
       });
     } else if (this.input.keys.includes('ArrowRight') || this.input.keys.includes('ArrowUp') || this.input.keys.includes('ArrowDown')){
-        this.particles.forEach((particle) => {
-          particle.updateForwardThruster();
-        });
+      this.particles.forEach((particle) => {
+        particle.updateForwardThruster();
+      });
     } else {
       this.particles.forEach((particle) => {
-      particle.markedForDeletion = true;
+        particle.markedForDeletion = true;
       });
     }
     
     if (this.input.keys.includes('ArrowRight') && this.input.keys.includes('ArrowLeft')){
-        this.particles.forEach((particle) => {
+      this.particles.forEach((particle) => {
         particle.markedForDeletion = true;
       });
     }
 
     if (this.input.keys.includes('ArrowUp') && this.input.keys.includes('ArrowDown')){
       this.particles.forEach((particle) => {
-      particle.markedForDeletion = true;
-    });
-  }
+        particle.markedForDeletion = true;
+      });
+    }
 
-  this.particles = this.particles.filter( particle => !particle.markedForDeletion);
+    this.particles = this.particles.filter( particle => !particle.markedForDeletion);
   }
   render(context, deltaTime){
     this.background.draw(context);
