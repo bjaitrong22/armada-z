@@ -28,7 +28,7 @@ class Enemy {
   draw(context) {
     if (!this.free){
       if (this.game.debug) context.strokeRect(this.x + (this.width * .10), this.y + (this.height * .40), this.width * .73, this.height * .18);
-      context.drawImage(this.image, this.frameX * this.width, 0, this.width, this.height, this.x, this.y, this.width, this.height);
+      context.drawImage(this.image, this.frameX * this.width, 0, this.spriteWidth, this.spriteHeight, this.x, this.y, this.width, this.height);
     }
   }
   reset(){
@@ -45,8 +45,11 @@ export class Destroyer extends Enemy {
   constructor(game){
     super();
     this.game = game;
-    this.width = 256;
-    this.height = 256;
+    this.spriteWidth = 256;
+    this.spriteHeight = 256;
+    this.sizeModifier = Math.random() * 0.6 + .04;
+    this.width = this.spriteWidth * this.sizeModifier;
+    this.height = this.spriteHeight * this.sizeModifier;
     this.x = this.game.width + Math.random() * this.game.width * 0.5;
     this.y = Math.random() * this.game.height * 0.5;
     this.dX = Math.random() + 0.5;
@@ -59,8 +62,11 @@ export class DragonCannon extends Enemy {
   constructor(game){
     super();
     this.game = game;
-    this.width = 228;
-    this.height = 139;
+    this.spriteWidth = 228;
+    this.spriteHeight = 139;
+    this.sizeModifier = Math.random() * 0.6 + .04;
+    this.width = this.spriteWidth * this.sizeModifier;
+    this.height = this.spriteHeight * this.sizeModifier;
     this.x = this.game.width + Math.random() * this.game.width * 0.5;
     this.y = Math.random() * this.game.height * 0.5;
     this.dX = Math.random() + 0.5;
