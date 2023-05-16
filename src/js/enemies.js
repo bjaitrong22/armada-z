@@ -12,7 +12,7 @@ class Enemy {
   update(deltaTime){
     //movement
     if(!this.free){
-      this.x -= this.dX + this.game.speed;
+      this.x -= this.dX * deltaTime + this.game.speed;
       this.y += this.dY;
       if (this.frameTimer > this.frameInterval){
         this.frameTimer = 0;
@@ -52,7 +52,7 @@ export class Destroyer extends Enemy {
     this.height = this.spriteHeight * this.sizeModifier;
     this.x = this.game.width + Math.random() * this.game.width * 0.5;
     this.y = Math.random() * this.game.height * 0.5;
-    this.dX = Math.random() + 0.5;
+    this.dX = Math.random() * 0.05 + .01;
     this.dY = 0;
     this.MaxFrame = 0;
     this.image = document.getElementById('destroyer');
@@ -69,7 +69,7 @@ export class DragonCannon extends Enemy {
     this.height = this.spriteHeight * this.sizeModifier;
     this.x = this.game.width + Math.random() * this.game.width * 0.5;
     this.y = Math.random() * this.game.height * 0.5;
-    this.dX = Math.random() + 0.5;
+    this.dX = Math.random() * .05 + .15;
     this.dY = 0;
     this.MaxFrame = 0;
     this.image = document.getElementById('dragonCannon');
