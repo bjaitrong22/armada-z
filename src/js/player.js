@@ -4,8 +4,11 @@ import engine1 from './../assets/audioEffects/ScatterNoise1.mp3';
 export class Player {
   constructor(game){
     this.game = game;
-    this.width = 150;
-    this.height = 54;
+    this.spriteWidth = 150;
+    this.spriteHeight = 54;
+    this.sizeModifier = .55;
+    this.width = this.spriteWidth * this.sizeModifier;
+    this.height = this.spriteHeight * this.sizeModifier;
     this.x = 0;
     this.y = this.game.height - this.height - this.game.bottomMargin;
     this.image = document.getElementById('player_ship');
@@ -68,7 +71,7 @@ export class Player {
   }
   draw(context) {
     if (this.game.debug) context.strokeRect(this.x, this.y, this.width, this.height);
-    context.drawImage(this.image, this.frameX * this.width, this.frameY * this.height, this.width, this.height, this.x, this.y, this.width, this.height );
+    context.drawImage(this.image, this.frameX * this.spriteWidth, this.frameY * this.spriteHeight, this.spriteWidth, this.spriteHeight, this.x, this.y, this.width, this.height );
 
   }
   setState(state, dx){
