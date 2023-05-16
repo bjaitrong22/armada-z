@@ -47,7 +47,7 @@ export class Destroyer extends Enemy {
     this.game = game;
     this.spriteWidth = 256;
     this.spriteHeight = 256;
-    this.sizeModifier = Math.random() * 0.6 + .04;
+    this.sizeModifier = Math.random() * 0.95 + .04;
     this.width = this.spriteWidth * this.sizeModifier;
     this.height = this.spriteHeight * this.sizeModifier;
     this.x = this.game.width + Math.random() * this.game.width * 0.5;
@@ -64,7 +64,7 @@ export class DragonCannon extends Enemy {
     this.game = game;
     this.spriteWidth = 228;
     this.spriteHeight = 139;
-    this.sizeModifier = Math.random() * 0.6 + .04;
+    this.sizeModifier = Math.random() * 0.5 + .05;
     this.width = this.spriteWidth * this.sizeModifier;
     this.height = this.spriteHeight * this.sizeModifier;
     this.x = this.game.width + Math.random() * this.game.width * 0.5;

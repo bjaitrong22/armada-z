@@ -6,7 +6,7 @@ export class Player {
     this.game = game;
     this.spriteWidth = 150;
     this.spriteHeight = 54;
-    this.sizeModifier = .55;
+    this.sizeModifier = .314;
     this.width = this.spriteWidth * this.sizeModifier;
     this.height = this.spriteHeight * this.sizeModifier;
     this.x = 0;
