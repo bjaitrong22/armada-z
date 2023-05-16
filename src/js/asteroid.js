@@ -3,17 +3,17 @@ export class Asteroid {
     this.game = game;
     this.spriteWidth = 150;
     this.spriteHeight = 155;
-    this.sizeModifier = Math.random() * 0.8 + .04;
+    this.sizeModifier = Math.random() * 0.4 + .03;
     this.width = this.spriteWidth * this.sizeModifier;
     this.height = this.spriteHeight * this.sizeModifier;
     this.radius = this.width * .5;
     this.x = -this.radius;
     this.y = Math.random() * this.game.height;
     this.image = document.getElementById('asteroid');
-    this.dX = Math.random()* .05;
+    this.dX = Math.random()* .01 + .01;
     this.free = true;
     this.angle = 0;
-    this.angularVelocity = Math.random() * 0.05 - 0.02;
+    this.angularVelocity = Math.random() * 0.02 - 0.01;
   }
   update(deltaTime){
     if(!this.free){
