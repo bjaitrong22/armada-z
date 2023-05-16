@@ -17,11 +17,11 @@ export class Game {
     this.asteroidTimer = 0;
     this.asteroidInterval = 3000;
     this.dragonCannonPool = [];
-    this.maxDragonCannon = 2;
+    this.maxDragonCannon = 50;
     this.dragonCannonTimer = 0;
     this.dragonCannonInterval = 6000;
     this.destroyerPool = [];
-    this.maxDestroyer = 50;
+    this.maxDestroyer = 40;
     this.destroyerTimer = 0;
     this.destroyerInterval = 2500;
     this.particles = [];
@@ -57,6 +57,9 @@ export class Game {
     for (let i = 0; i < this.maxDragonCannon; i++){
       this.dragonCannonPool.push(new DragonCannon(this));
     }
+    this.dragonCannonPool.sort(function(a,b){
+      return a.y - b.y;
+    });
   }
   getDragonCannon(){
     for (let i = 0; i < this.dragonCannonPool.length; i++){
@@ -67,6 +70,10 @@ export class Game {
     for (let i = 0; i < this.maxDestroyer; i++){
       this.destroyerPool.push(new Destroyer(this));
     }
+
+    this.destroyerPool.sort(function(a,b){
+      return a.y - b.y;
+    }); 
   }
   getDestroyer(){
     for (let i = 0; i < this.destroyerPool.length; i++){
@@ -120,7 +127,7 @@ export class Game {
     }
     this.asteroidPool.forEach(asteroid => {
       asteroid.draw(context);
-      asteroid.update();
+      asteroid.update(deltaTime);
     });
 
     // Periodically creates dragonCannon ships

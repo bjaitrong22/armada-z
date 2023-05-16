@@ -7,15 +7,15 @@ export class Asteroid {
     this.image = document.getElementById('asteroid');
     this.width = 150;
     this.height = 155;
-    this.speed = Math.random()* 1.5 + 0.2;
+    this.dX = Math.random()* .05;
     this.free = true;
     this.angle = 0;
-    this.angularVelocity = Math.random() * 0.03 - 0.01;
+    this.angularVelocity = Math.random() * 0.05 - 0.02;
   }
-  update(){
+  update(deltaTime){
     if(!this.free){
       this.angle += this.angularVelocity;
-      this.x += this.speed;
+      this.x += this.dX * deltaTime;
       if(this.x > this.game.width + this.radius){
         this.reset();
       }
