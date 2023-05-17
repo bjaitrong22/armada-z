@@ -5,6 +5,7 @@ import { InputHandler } from "./input.js";
 import { Asteroid } from "./asteroid.js";
 import { Destroyer, DragonCannon} from "./enemies.js";
 import { thrusterParticle, projectileParticle } from "./particles.js";
+import { Explosion } from "./explosion.js";
 
 export class Game {
   constructor( width, height) {
@@ -13,22 +14,34 @@ export class Game {
     this.bottomMargin = 200;
     this.speed = 0;
     this.maxSpeed = .3;
+
     this.asteroidPool = [];
     this.maxAsteroid = 60;
     this.asteroidTimer = 0;
     this.asteroidInterval = 3000;
+
     this.dragonCannonPool = [];
     this.maxDragonCannon = 50;
     this.dragonCannonTimer = 0;
     this.dragonCannonInterval = 6000;
+
     this.destroyerPool = [];
     this.maxDestroyer = 40;
     this.destroyerTimer = 0;
     this.destroyerInterval = 2500;
+
     this.thrusterParticlePool = [];
     this.maxThrusterParticles = 50;
     this.projectileParticlePool = [];
     this.maxProjectileParticlePool = 100;
+
+    this.mouse = {
+      x: 0,
+      y: 0
+    };
+    this.explosionPool = [];
+    this.maxExplosions = 25;
+
     this.background = new Background(this);
     this.player = new Player(this);
     this.input = new InputHandler(this);
@@ -36,10 +49,19 @@ export class Game {
     this.time = 0;
     this.player.currentState =  this.player.states[0];
     this.player.currentState.enter();
+
     this.createAsteroidPool();
     this.createDestroyerPool();
     this.createDragonCannonPool();
     this.createThrusterParticlePool();
+    this.createExplosionPool();
+
+    window.addEventListener('click', e => {
+      this.mouse.x = e.offsetX;
+      this.mouse.y = e.offsetY;
+      const explosion = this.getExplosion();
+      if (explosion) explosion.start(this.mouse.x, this.mouse.y);
+    });
   }
   setGameDimensions(width, height){
     this.width = width;
@@ -111,6 +133,18 @@ export class Game {
       }
     }
   }
+  createExplosionPool(){
+    for (let i = 0; i < this.maxExplosions ; i++){
+      this.explosionPool.push(new Explosion(this));
+    }
+  }
+  getExplosion(){
+    for (let i = 0; i < this.explosionPool.length ; i++){
+      if (this.explosionPool[i].free){
+        return this.explosionPool[i];
+      }
+    }
+  }
   render(context, deltaTime){
     this.time += deltaTime;
     this.background.draw(context);
@@ -155,6 +189,12 @@ export class Game {
     this.destroyerPool.forEach(destroyer => {
       destroyer.draw(context);
       destroyer.update(deltaTime);
+    });
+
+    //explosions
+    this.explosionPool.forEach(explosion => {
+      explosion.draw(context);
+      explosion.update(deltaTime);
     });
 
     this.player.update(this.input.keys, deltaTime);
