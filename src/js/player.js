@@ -1,5 +1,8 @@
 import { Floating, HorizontalTravel, VerticalTravel, FrontalAttack } from "./playerStates";
 import engine1 from './../assets/audioEffects/ScatterNoise1.mp3';
+import { RearWeaponSound } from "./sounds";
+
+
 
 export class Player {
   constructor(game){
@@ -24,7 +27,10 @@ export class Player {
     this.maxDy = 5;
     this.states = [new Floating(this.game), new HorizontalTravel(this.game), new VerticalTravel(this.game), new FrontalAttack(this.game)];
     this.currentState = null;
-    this.sound = new Audio(engine1);
+    this.engineSound = new Audio(engine1);
+    this.rearWeaponSoundPool = [];
+    this.maxRearWeaponSound = 30;
+    this.createRearWeaponSoundPool();
 
   }
   update(input, deltaTime){
@@ -32,9 +38,30 @@ export class Player {
 
     //engine thruster sound
     if (this.dy !== 0 || this.dx !== 0){
-      this.sound.play();
-    } else this.sound.pause();
+      this.engineSound.play();
+    } else this.engineSound.pause();
 
+    //rearWeapon Sound
+    // if (input.includes('ArrowLeft') && input.includes('ArrowRight')){
+    //   this.game.thrusterParticlePool.forEach(thrusterParticle => {
+    //     if(!thrusterParticle.free) this.rearWeaponSound.play();
+    //   });
+    // }
+    if (input.includes('ArrowLeft') && input.includes('ArrowRight')){
+      this.game.thrusterParticlePool.forEach(thrusterParticle => {
+        const rearWeaponSound = this.getRearWeaponSound();
+        if(!thrusterParticle.free){ 
+          if (rearWeaponSound){
+            rearWeaponSound.start();
+          }
+          this.rearWeaponSoundPool.forEach(rearWeaponSound => {
+            rearWeaponSound.play();
+          }); 
+        } 
+        rearWeaponSound.reset();
+      });
+    }
+    
     //horizontal movement
     this.x += this.dx;
     if (input.includes('ArrowRight') && !input.includes('ArrowLeft')){  
@@ -42,7 +69,6 @@ export class Player {
     } 
     else if (input.includes('ArrowLeft') && !input.includes('ArrowRight')) this.dx = -this.maxDx;
     else this.dx = 0;
-    
 
     // horizontal boundaries
     if (this.x < 0) this.x = 0;
@@ -85,6 +111,18 @@ export class Player {
     } else {
       if(input.includes('ArrowUp')) this.dy = -this.maxDy;
       else this.dy = this.maxDy;
+    }
+  }
+  createRearWeaponSoundPool(){
+    for (let i = 0; i < this.maxRearWeaponSound; i++){
+      this.rearWeaponSoundPool.push(new RearWeaponSound());
+    }
+  }
+  getRearWeaponSound(){
+    for (let i = 0; i < this.rearWeaponSoundPool.length ; i++){
+      if (this.rearWeaponSoundPool[i].free){
+        return this.rearWeaponSoundPool[i];
+      }
     }
   }
 }
