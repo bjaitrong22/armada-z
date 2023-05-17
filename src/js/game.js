@@ -37,7 +37,8 @@ export class Game {
 
     this.mouse = {
       x: 0,
-      y: 0
+      y: 0,
+      radius: 2
     };
     this.explosionPool = [];
     this.maxExplosions = 25;
@@ -59,8 +60,13 @@ export class Game {
     window.addEventListener('click', e => {
       this.mouse.x = e.offsetX;
       this.mouse.y = e.offsetY;
-      const explosion = this.getExplosion();
-      if (explosion) explosion.start(this.mouse.x, this.mouse.y);
+      this.asteroidPool.forEach(asteroid => {
+        if (!asteroid.free && this.checkCollision(asteroid, this.mouse)){
+          const explosion = this.getExplosion();
+          if (explosion) explosion.start(asteroid.x, asteroid.y);
+          asteroid.reset();
+        }
+      });
     });
   }
   setGameDimensions(width, height){
@@ -72,7 +78,7 @@ export class Game {
       this.asteroidPool.push(new Asteroid(this));
     }
     this.asteroidPool.sort(function(a,b){
-      return a.y - b.y;
+      return a.width - b.width;
     });
   }
   getAsteroid(){
@@ -144,6 +150,13 @@ export class Game {
         return this.explosionPool[i];
       }
     }
+  }
+  checkCollision(a,b){
+    const sumOfRadii = a.radius + b.radius;
+    const distanceX = a.x - b.x;
+    const distanceY = a.y - b.y;
+    const distance = Math.hypot(distanceX, distanceY);
+    return distance < sumOfRadii;
   }
   render(context, deltaTime){
     this.time += deltaTime;

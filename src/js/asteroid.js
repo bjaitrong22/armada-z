@@ -3,7 +3,7 @@ export class Asteroid {
     this.game = game;
     this.spriteWidth = 150;
     this.spriteHeight = 155;
-    this.sizeModifier = Math.random() * 0.4 + .03;
+    this.sizeModifier = Math.random() * 0.7 + .03;
     this.width = this.spriteWidth * this.sizeModifier;
     this.height = this.spriteHeight * this.sizeModifier;
     this.radius = this.width * .5;
@@ -19,9 +19,7 @@ export class Asteroid {
     if(!this.free){
       this.angle += this.angularVelocity;
       this.x += this.dX * deltaTime;
-      if(this.x > this.game.width + this.radius){
-        this.reset();
-      }
+      if(this.x > this.game.width + this.radius) this.reset();
     }
   }
   draw(context){
