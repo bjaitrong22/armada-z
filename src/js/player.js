@@ -33,6 +33,18 @@ export class Player {
     this.createRearWeaponSoundPool();
 
   }
+  createRearWeaponSoundPool(){
+    for (let i = 0; i < this.maxRearWeaponSound; i++){
+      this.rearWeaponSoundPool.push(new RearWeaponSound());
+    }
+  }
+  getRearWeaponSound(){
+    for (let i = 0; i < this.rearWeaponSoundPool.length ; i++){
+      if (this.rearWeaponSoundPool[i].free){
+        return this.rearWeaponSoundPool[i];
+      }
+    }
+  }
   update(input, deltaTime){
     this.currentState.handleInput(input);
 
@@ -41,23 +53,16 @@ export class Player {
       this.engineSound.play();
     } else this.engineSound.pause();
 
-    //rearWeapon Sound
-    // if (input.includes('ArrowLeft') && input.includes('ArrowRight')){
-    //   this.game.thrusterParticlePool.forEach(thrusterParticle => {
-    //     if(!thrusterParticle.free) this.rearWeaponSound.play();
-    //   });
-    // }
+    //rear weapon sound
     if (input.includes('ArrowLeft') && input.includes('ArrowRight')){
       this.game.thrusterParticlePool.forEach(thrusterParticle => {
         const rearWeaponSound = this.getRearWeaponSound();
         if(!thrusterParticle.free){ 
           if (rearWeaponSound){
             rearWeaponSound.start();
-          }
-          this.rearWeaponSoundPool.forEach(rearWeaponSound => {
             rearWeaponSound.play();
-          }); 
-        } 
+          }
+        }
         rearWeaponSound.reset();
       });
     }
@@ -111,18 +116,6 @@ export class Player {
     } else {
       if(input.includes('ArrowUp')) this.dy = -this.maxDy;
       else this.dy = this.maxDy;
-    }
-  }
-  createRearWeaponSoundPool(){
-    for (let i = 0; i < this.maxRearWeaponSound; i++){
-      this.rearWeaponSoundPool.push(new RearWeaponSound());
-    }
-  }
-  getRearWeaponSound(){
-    for (let i = 0; i < this.rearWeaponSoundPool.length ; i++){
-      if (this.rearWeaponSoundPool[i].free){
-        return this.rearWeaponSoundPool[i];
-      }
     }
   }
 }

@@ -8,7 +8,9 @@ class Sound {
     this.free = true;
   }
   start(){
-    this.free = false;  
+    this.free = false;
+    this.rearWeaponSound.currentTime = 0;
+
   } 
 }
 
@@ -18,6 +20,6 @@ export class RearWeaponSound extends Sound {
     this.rearWeaponSound = new Audio(rearWeaponSound);
   }
   play(){
-    this.rearWeaponSound.play();
+    if(!this.free) this.rearWeaponSound.play();
   }
 }
