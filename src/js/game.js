@@ -4,6 +4,7 @@ import { Player } from "./player.js";
 import { InputHandler } from "./input.js";
 import { Asteroid } from "./asteroid.js";
 import { Destroyer, DragonCannon} from "./enemies.js";
+import { thrusterParticle, projectileParticle } from "./particles.js";
 
 export class Game {
   constructor( width, height) {
@@ -13,7 +14,7 @@ export class Game {
     this.speed = 0;
     this.maxSpeed = .3;
     this.asteroidPool = [];
-    this.maxAsteroid = 30;
+    this.maxAsteroid = 60;
     this.asteroidTimer = 0;
     this.asteroidInterval = 3000;
     this.dragonCannonPool = [];
@@ -24,7 +25,10 @@ export class Game {
     this.maxDestroyer = 40;
     this.destroyerTimer = 0;
     this.destroyerInterval = 2500;
-    this.particles = [];
+    this.thrusterParticlePool = [];
+    this.maxThrusterParticles = 50;
+    this.projectileParticlePool = [];
+    this.maxProjectileParticlePool = 100;
     this.background = new Background(this);
     this.player = new Player(this);
     this.input = new InputHandler(this);
@@ -35,6 +39,7 @@ export class Game {
     this.createAsteroidPool();
     this.createDestroyerPool();
     this.createDragonCannonPool();
+    this.createThrusterParticlePool();
   }
   setGameDimensions(width, height){
     this.width = width;
@@ -44,12 +49,14 @@ export class Game {
     for (let i = 0; i < this.maxAsteroid; i++){
       this.asteroidPool.push(new Asteroid(this));
     }
+    this.asteroidPool.sort(function(a,b){
+      return a.y - b.y;
+    });
   }
   getAsteroid(){
     for (let i = 0; i < this.asteroidPool.length ; i++){
       if (this.asteroidPool[i].free){
         return this.asteroidPool[i];
-        
       }
     }
   }
@@ -80,40 +87,32 @@ export class Game {
       if (this.destroyerPool[i].free) return this.destroyerPool[i];
     }
   }
-  update(deltaTime) {
-    this.time += deltaTime;
-    this.player.update(this.input.keys, deltaTime);
-    
-    // Particles/Thrusters conditions for horizontal movement
-    if (this.input.keys.includes('ArrowLeft') && !this.input.keys.includes('ArrowRight')){
-      this.particles.forEach((particle) => {
-        particle.updateReverseThruster();
-      });
-    } else if (this.input.keys.includes('ArrowRight') || this.input.keys.includes('ArrowUp') || this.input.keys.includes('ArrowDown')){
-      this.particles.forEach((particle) => {
-        particle.updateForwardThruster();
-      });
-    } else {
-      this.particles.forEach((particle) => {
-        particle.markedForDeletion = true;
-      });
+  createThrusterParticlePool(){
+    for (let i = 0; i < this.maxThrusterParticles; i++){
+      this.thrusterParticlePool.push(new thrusterParticle(this));
     }
-    
-    if (this.input.keys.includes('ArrowRight') && this.input.keys.includes('ArrowLeft')){
-      this.particles.forEach((particle) => {
-        particle.markedForDeletion = true;
-      });
+  }
+  getThrusterParticle(){
+    for (let i = 0; i < this.thrusterParticlePool.length ; i++){
+      if (this.thrusterParticlePool[i].free){
+        return this.thrusterParticlePool[i];
+      }
     }
-
-    if (this.input.keys.includes('ArrowUp') && this.input.keys.includes('ArrowDown')){
-      this.particles.forEach((particle) => {
-        particle.markedForDeletion = true;
-      });
+  }
+  createProjectileParticlePool(){
+    for (let i = 0; i < this.maxProjectileParticles; i++){
+      this.projectileParticlePool.push(new Asteroid(this));
     }
-
-    this.particles = this.particles.filter( particle => !particle.markedForDeletion);
+  }
+  getProjectileParticle(){
+    for (let i = 0; i < this.ThrusterParticlePool.length ; i++){
+      if (this.thrusterParticlePool[i].free){
+        return this.thrusterParticlePool[i];
+      }
+    }
   }
   render(context, deltaTime){
+    this.time += deltaTime;
     this.background.draw(context);
     this.background.update();
     
@@ -158,10 +157,49 @@ export class Game {
       destroyer.update(deltaTime);
     });
 
+    this.player.update(this.input.keys, deltaTime);
     this.player.draw(context);
-    this.particles.forEach(particle => {
-      particle.draw(context);
-    });
-    this.update(deltaTime);
+
+    // creates thruster particles
+    const thrusterParticle = this.getThrusterParticle();
+    if (thrusterParticle) thrusterParticle.start();
+    
+
+    //Particles/Thrusters conditions for horizontal movement
+    if (this.input.keys.includes('ArrowLeft') && !this.input.keys.includes('ArrowRight')){
+      this.thrusterParticlePool.forEach((thrusterParticle) => {
+        thrusterParticle.draw(context);
+        thrusterParticle.updateReverseThruster();
+      });
+    } else if (this.input.keys.includes('ArrowRight') || this.input.keys.includes('ArrowUp') || this.input.keys.includes('ArrowDown')){
+      this.thrusterParticlePool.forEach((thrusterParticle) => {
+        thrusterParticle.draw(context);
+        thrusterParticle.updateForwardThruster();
+      });
+    } else {
+      this.thrusterParticlePool.forEach((thrusterParticle) => {
+        thrusterParticle.reset() ;
+      });
+    }
+    
+    if (this.input.keys.includes('ArrowRight') && this.input.keys.includes('ArrowLeft')){
+      this.thrusterParticlePool.forEach((thrusterParticle) => {
+        thrusterParticle.reset();
+      });
+    }
+
+    if (this.input.keys.includes('ArrowUp') && this.input.keys.includes('ArrowDown')){
+      this.thrusterParticlePool.forEach((thrusterParticle) => {
+        thrusterParticle.reset();
+      });
+    }
+
+    // Particles/frontal projectiles
+    if (this.input.keys.includes('s')){
+      this.projectileParticles.forEach((projectileParticle) => {
+        projectileParticle.updateFrontalProjectile(deltaTime);
+      });
+    }
+
   }
 }

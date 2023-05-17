@@ -1,4 +1,4 @@
-import { Floating, HorizontalTravel,VerticalTravel } from "./playerStates";
+import { Floating, HorizontalTravel, VerticalTravel, FrontalAttack } from "./playerStates";
 import engine1 from './../assets/audioEffects/ScatterNoise1.mp3';
 
 export class Player {
@@ -22,7 +22,7 @@ export class Player {
     this.dy = 0;
     this.maxDx = 5;
     this.maxDy = 5;
-    this.states = [new Floating(this.game), new HorizontalTravel(this.game), new VerticalTravel(this.game)];
+    this.states = [new Floating(this.game), new HorizontalTravel(this.game), new VerticalTravel(this.game), new FrontalAttack(this.game)];
     this.currentState = null;
     this.sound = new Audio(engine1);
 
