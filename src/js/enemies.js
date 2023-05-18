@@ -64,7 +64,7 @@ export class DragonCannon extends Enemy {
     this.game = game;
     this.spriteWidth = 228;
     this.spriteHeight = 139;
-    this.sizeModifier = Math.random() * .6 + .05;
+    this.sizeModifier = Math.random() * .55 + .05;
     this.width = this.spriteWidth * this.sizeModifier;
     this.height = this.spriteHeight * this.sizeModifier;
     this.x = this.game.width + Math.random() * this.game.width * 0.5;

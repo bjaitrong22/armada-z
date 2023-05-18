@@ -12,11 +12,11 @@ export class Game {
     this.width = width;
     this.height = height;
     this.bottomMargin = 200;
-    this.speed = 0;
+    this.speed = .2;
     this.maxSpeed = .3;
 
     this.asteroidPool = [];
-    this.maxAsteroid = 60;
+    this.maxAsteroid = 40;
     this.asteroidTimer = 0;
     this.asteroidInterval = 1500;
 
@@ -77,9 +77,6 @@ export class Game {
     for (let i = 0; i < this.maxAsteroid; i++){
       this.asteroidPool.push(new Asteroid(this));
     }
-    this.asteroidPool.sort(function(a,b){
-      return a.width - b.width;
-    });
   }
   getAsteroid(){
     for (let i = 0; i < this.asteroidPool.length ; i++){

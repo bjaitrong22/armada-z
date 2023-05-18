@@ -3,7 +3,7 @@ export class Asteroid {
     this.game = game;
     this.spriteWidth = 150;
     this.spriteHeight = 155;
-    this.sizeModifier = Math.random() * 0.7 + .03;
+    this.sizeModifier = Math.random() * 0.5 + .03;
     this.width = this.spriteWidth * this.sizeModifier;
     this.height = this.spriteHeight * this.sizeModifier;
     this.radius = this.width * .5;
