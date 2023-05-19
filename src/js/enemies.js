@@ -11,9 +11,9 @@ class Enemy {
   }
   update(deltaTime){
     //movement
-    if(!this.free){
-      this.x -= this.dX * deltaTime + this.game.speed;
-      this.y += this.dY;
+    if (!this.free){
+      this.x -= this.dx * deltaTime + this.game.speed;
+      this.y += this.dy;
       if (this.frameTimer > this.frameInterval){
         this.frameTimer = 0;
         if (this.frameX < this.maxFrame) this.frameX++;
@@ -27,7 +27,7 @@ class Enemy {
   }
   draw(context) {
     if (!this.free){
-      if (this.game.debug) context.strokeRect(this.x + (this.width * .10), this.y + (this.height * .40), this.width * .73, this.height * .18);
+      if (this.game.debug) context.strokeRect(this.x, this.y, this.width, this.height);
       context.drawImage(this.image, this.frameX * this.width, 0, this.spriteWidth, this.spriteHeight, this.x, this.y, this.width, this.height);
     }
   }
@@ -52,8 +52,8 @@ export class Destroyer extends Enemy {
     this.height = this.spriteHeight * this.sizeModifier;
     this.x = this.game.width + Math.random() * this.game.width * 0.5;
     this.y = Math.random() * this.game.height * 0.5;
-    this.dX = Math.random() * 0.05 + .01;
-    this.dY = 0;
+    this.dx = Math.random() * 0.05 + .01;
+    this.dy = 0;
     this.MaxFrame = 0;
     this.image = document.getElementById('destroyer');
   }
@@ -69,8 +69,8 @@ export class DragonCannon extends Enemy {
     this.height = this.spriteHeight * this.sizeModifier;
     this.x = this.game.width + Math.random() * this.game.width * 0.5;
     this.y = Math.random() * this.game.height * 0.5;
-    this.dX = Math.random() * .05 + .15;
-    this.dY = 0;
+    this.dx = Math.random() * .05 + .15;
+    this.dy = 0;
     this.MaxFrame = 0;
     this.image = document.getElementById('dragonCannon');
   }
