@@ -11,12 +11,28 @@ export class InputHandler {
             e.key === 'Enter' ||
             e.key === 's'
       ) && this.keys.indexOf(e.key) === -1){
+        if (e.key === 'ArrowLeft'){
+          if (this.keys.indexOf('ArrowRight') !== -1){
+            this.keys.splice(this.keys.indexOf('ArrowRight'), 1);
+          }
+        }
+        if (e.key === 'ArrowRight'){
+          if (this.keys.indexOf('ArrowLeft') !== -1){
+            this.keys.splice(this.keys.indexOf('ArrowLeft'), 1);
+          }
+        }
+        if (e.key === 'ArrowDown'){
+          if (this.keys.indexOf('ArrowUp') !== -1){
+            this.keys.splice(this.keys.indexOf('ArrowUp'), 1);
+          }
+        }
+        if (e.key === 'ArrowUp'){
+          if (this.keys.indexOf('ArrowDown') !== -1){
+            this.keys.splice(this.keys.indexOf('ArrowDown'), 1);
+          }
+        }
         this.keys.push(e.key);
       } else if (e.key === 'd') this.game.debug = !this.game.debug;
-
-      if (e.repeat && this.keys.indexOf(e.key + 'Hold') === -1){
-          this.keys.push(e.key + 'Hold');
-      }
     });
     window.addEventListener('keyup', e => {
       if ( e.key === 'ArrowDown' ||
@@ -26,7 +42,6 @@ export class InputHandler {
         e.key === 'Enter' ||
         e.key === 's'){
         this.keys.splice(this.keys.indexOf(e.key), 1);
-        this.keys.splice(this.keys.indexOf(e.key + 'Hold'),1);
       }
     });
   }
