@@ -1,4 +1,4 @@
-import { Floating, HorizontalTravel, VerticalTravel, FrontalAttack } from "./playerStates";
+import { Floating, ForwardTravel, ReverseTravel, UpwardTravel, DownwardTravel, UpwardForwardTravel, UpwardBackTravel, DownwardForwardTravel, DownwardBackTravel,ShootForward } from "./playerStates";
 import engine1 from './../assets/audioEffects/ScatterNoise1.mp3';
 import { RearWeaponSound } from "./sounds";
 
@@ -25,7 +25,7 @@ export class Player {
     this.dy = 0;
     this.maxDx = 5;
     this.maxDy = 5;
-    this.states = [new Floating(this.game), new HorizontalTravel(this.game), new VerticalTravel(this.game), new FrontalAttack(this.game)];
+    this.states = [new Floating(this.game), new ForwardTravel(this.game), new ReverseTravel(this.game), new UpwardTravel(this.game), new DownwardTravel(this.game), new UpwardForwardTravel(this.game), new UpwardBackTravel(this.game), new DownwardForwardTravel(this.game), new DownwardBackTravel(this.game), new ShootForward(this.game)];
     this.currentState = null;
     this.engineSound = new Audio(engine1);
     this.rearWeaponSoundPool = [];
@@ -53,27 +53,30 @@ export class Player {
       this.engineSound.play();
     } else this.engineSound.pause();
 
-    //rear weapon sound
-    if (input.includes('ArrowLeft') && input.includes('ArrowRight')){
-      this.game.thrusterParticlePool.forEach(thrusterParticle => {
-        const rearWeaponSound = this.getRearWeaponSound();
-        if(!thrusterParticle.free){ 
-          if (rearWeaponSound){
-            rearWeaponSound.start();
-            rearWeaponSound.play();
-          }
-        }
-        rearWeaponSound.reset();
-      });
-    }
+    // //rear weapon sound
+    // if (input.includes('ArrowLeft') && input.includes('ArrowRight')){
+    //   this.game.thrusterParticlePool.forEach(thrusterParticle => {
+    //     const rearWeaponSound = this.getRearWeaponSound();
+    //     if(!thrusterParticle.free){ 
+    //       if (rearWeaponSound){
+    //         rearWeaponSound.start();
+    //         rearWeaponSound.play();
+    //       }
+    //     }
+    //     rearWeaponSound.reset();
+    //   });
+    // }
     
     //horizontal movement
     this.x += this.dx;
-    if (input.includes('ArrowRight') && !input.includes('ArrowLeft')){  
+    if (input.includes('ArrowLeft')){
+      this.dx = -this.maxDx;
+    } else 
+    if (input.includes('ArrowRight')){  
       this.dx = this.maxDx;
+    } else{
+      this.dx = 0;
     } 
-    else if (input.includes('ArrowLeft') && !input.includes('ArrowRight')) this.dx = -this.maxDx;
-    else this.dx = 0;
 
     // horizontal boundaries
     if (this.x < 0) this.x = 0;
@@ -81,10 +84,10 @@ export class Player {
 
     // vertical movement
     this.y += this.dy;
-    if (input.includes('ArrowUp') && !input.includes('ArrowDown')){
-      this.verticalMovementSettings(input);
-    } else if (input.includes('ArrowDown') && !input.includes('ArrowUp')){ 
-      this.verticalMovementSettings(input);
+    if (input.includes('ArrowUp')){
+      this.dy = -this.maxDy;
+    } else if (input.includes('ArrowDown')){ 
+      this.dy = this.maxDy;
     } else this.dy = 0;
     
     // vertical boundaries
@@ -109,13 +112,5 @@ export class Player {
     this.currentState = this.states[state];
     this.game.speed = this.game.maxSpeed * dx;
     this.currentState.enter();
-  }
-  verticalMovementSettings(input){
-    if(input.includes('ArrowLeft') && input.includes('ArrowRight')){
-      this.dy = 0;
-    } else {
-      if(input.includes('ArrowUp')) this.dy = -this.maxDy;
-      else this.dy = this.maxDy;
-    }
   }
 }

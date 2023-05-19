@@ -4,7 +4,7 @@ import { Player } from "./player.js";
 import { InputHandler } from "./input.js";
 import { Asteroid } from "./asteroid.js";
 import { Destroyer, DragonCannon} from "./enemies.js";
-import { thrusterParticle, projectileParticle } from "./particles.js";
+import { ForwardThrusterParticle, ReverseThrusterParticle, projectileParticle } from "./particles.js";
 import { Explosion } from "./explosion.js";
 
 export class Game {
@@ -23,25 +23,26 @@ export class Game {
     this.dragonCannonPool = [];
     this.maxDragonCannon = 30;
     this.dragonCannonTimer = 0;
-    this.dragonCannonInterval = 6000;
+    this.dragonCannonInterval = 1000;
 
     this.destroyerPool = [];
     this.maxDestroyer = 25;
     this.destroyerTimer = 0;
     this.destroyerInterval = 2500;
 
-    this.thrusterParticlePool = [];
-    this.maxThrusterParticles = 50;
+    this.forwardThrusterParticlePool = [];
+    this.maxForwardThrusterParticles = 25;
+
+    this.reverseThrusterParticlePool = [];
+    this.maxReverseThrusterParticles = 25;
+
     this.projectileParticlePool = [];
     this.maxProjectileParticlePool = 100;
 
-    this.mouse = {
-      x: 0,
-      y: 0,
-      radius: 2
-    };
     this.explosionPool = [];
     this.maxExplosions = 25;
+
+    this.collisions = [];
 
     this.background = new Background(this);
     this.player = new Player(this);
@@ -54,20 +55,10 @@ export class Game {
     this.createAsteroidPool();
     this.createDestroyerPool();
     this.createDragonCannonPool();
-    this.createThrusterParticlePool();
+    this.createForwardThrusterParticlePool();
+    this.createReverseThrusterParticlePool();
     this.createExplosionPool();
 
-    window.addEventListener('click', e => {
-      this.mouse.x = e.offsetX;
-      this.mouse.y = e.offsetY;
-      this.asteroidPool.forEach(asteroid => {
-        if (!asteroid.free && this.checkCollision(asteroid, this.mouse)){
-          const explosion = this.getExplosion();
-          if (explosion) explosion.start(asteroid.x, asteroid.y);
-          asteroid.reset();
-        }
-      });
-    });
   }
   setGameDimensions(width, height){
     this.width = width;
@@ -112,15 +103,27 @@ export class Game {
       if (this.destroyerPool[i].free) return this.destroyerPool[i];
     }
   }
-  createThrusterParticlePool(){
-    for (let i = 0; i < this.maxThrusterParticles; i++){
-      this.thrusterParticlePool.push(new thrusterParticle(this));
+  createForwardThrusterParticlePool(){
+    for (let i = 0; i < this.maxForwardThrusterParticles; i++){
+      this.forwardThrusterParticlePool.push(new ForwardThrusterParticle(this));
     }
   }
-  getThrusterParticle(){
-    for (let i = 0; i < this.thrusterParticlePool.length ; i++){
-      if (this.thrusterParticlePool[i].free){
-        return this.thrusterParticlePool[i];
+  getForwardThrusterParticle(){
+    for (let i = 0; i < this.forwardThrusterParticlePool.length ; i++){
+      if (this.forwardThrusterParticlePool[i].free){
+        return this.forwardThrusterParticlePool[i];
+      }
+    }
+  }
+  createReverseThrusterParticlePool(){
+    for (let i = 0; i < this.maxReverseThrusterParticles; i++){
+      this.reverseThrusterParticlePool.push(new ReverseThrusterParticle(this));
+    }
+  }
+  getReverseThrusterParticle(){
+    for (let i = 0; i < this.reverseThrusterParticlePool.length ; i++){
+      if (this.reverseThrusterParticlePool[i].free){
+        return this.reverseThrusterParticlePool[i];
       }
     }
   }
@@ -149,11 +152,16 @@ export class Game {
     }
   }
   checkCollision(a,b){
-    const sumOfRadii = a.radius + b.radius;
-    const distanceX = a.x - b.x;
-    const distanceY = a.y - b.y;
-    const distance = Math.hypot(distanceX, distanceY);
-    return distance < sumOfRadii;
+    if (a.x > b.x + b.width ||
+        a.x + a.width < b.x ||
+        a.y > b.y + b.height ||
+        a.y + a.height < b.y
+    ){
+      return false;
+    } else {
+      return true;
+    } 
+
   }
   render(context, deltaTime){
     this.time += deltaTime;
@@ -211,38 +219,54 @@ export class Game {
     this.player.draw(context);
 
     // creates thruster particles
-    const thrusterParticle = this.getThrusterParticle();
-    if (thrusterParticle) thrusterParticle.start();
+    const forwardThrusterParticle = this.getForwardThrusterParticle();
+    if (forwardThrusterParticle) forwardThrusterParticle.start();
     
-
-    //Particles/Thrusters conditions for horizontal movement
-    if (this.input.keys.includes('ArrowLeft') && !this.input.keys.includes('ArrowRight')){
-      this.thrusterParticlePool.forEach((thrusterParticle) => {
-        thrusterParticle.draw(context);
-        thrusterParticle.updateReverseThruster();
+    
+    const reverseThrusterParticle = this.getReverseThrusterParticle();
+    if (reverseThrusterParticle) reverseThrusterParticle.start();
+    
+    
+    if (this.input.keys.includes('ArrowRight')){
+      this.forwardThrusterParticlePool.forEach((forwardThrusterParticle) => {
+        forwardThrusterParticle.draw(context);
+        forwardThrusterParticle.updateForwardThruster(this.input.keys);
       });
-    } else if (this.input.keys.includes('ArrowRight') || this.input.keys.includes('ArrowUp') || this.input.keys.includes('ArrowDown')){
-      this.thrusterParticlePool.forEach((thrusterParticle) => {
-        thrusterParticle.draw(context);
-        thrusterParticle.updateForwardThruster();
+    } else if (this.input.keys.includes('ArrowLeft')){
+      this.reverseThrusterParticlePool.forEach((reverseThrusterParticle) => {
+        reverseThrusterParticle.draw(context);
+        reverseThrusterParticle.updateReverseThruster();
+      });
+
+    } else if (this.input.keys.includes('ArrowUp') || this.input.keys.includes('ArrowDown') && this.input.keys.length <= 1){
+      this.forwardThrusterParticlePool.forEach((forwardThrusterParticle) => {
+        forwardThrusterParticle.draw(context);
+        forwardThrusterParticle.updateForwardThruster(this.input.keys);
       });
     } else {
-      this.thrusterParticlePool.forEach((thrusterParticle) => {
-        thrusterParticle.reset() ;
+      this.forwardThrusterParticlePool.forEach((forwardThrusterParticle) => {
+        forwardThrusterParticle.reset() ;
+      });
+      this.reverseThrusterParticlePool.forEach((reverseThrusterParticle) => {
+        reverseThrusterParticle.reset() ;
       });
     }
     
-    if (this.input.keys.includes('ArrowRight') && this.input.keys.includes('ArrowLeft')){
-      this.thrusterParticlePool.forEach((thrusterParticle) => {
-        thrusterParticle.reset();
-      });
-    }
 
-    if (this.input.keys.includes('ArrowUp') && this.input.keys.includes('ArrowDown')){
-      this.thrusterParticlePool.forEach((thrusterParticle) => {
-        thrusterParticle.reset();
-      });
-    }
+    // //handle collision - rear weapon vs enemy
+    // this.dragonCannonPool.forEach(dragonCannon => {
+    //   this.thrusterParticlePool.forEach(thrusterParticle => {
+    //     if (!dragonCannon.free && !thrusterParticle.free){ 
+    //       if (this.checkCollision(dragonCannon, thrusterParticle)){
+    //         const explosion = this.getExplosion();
+    //         if (explosion){
+    //           explosion.start(dragonCannon.x, dragonCannon.y);
+    //           dragonCannon.reset();
+    //         } 
+    //       }
+    //     }
+    //   });
+    // });
 
     // Particles/frontal projectiles
     if (this.input.keys.includes('s')){
