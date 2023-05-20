@@ -9,7 +9,10 @@ export class Player {
     this.game = game;
     this.spriteWidth = 150;
     this.spriteHeight = 54;
-    this.sizeModifier = .314;
+    // this.spriteWidth = 256;
+    // this.spriteHeight = 256;
+    //this.sizeModifier = .314;
+    this.sizeModifier = .25;
     this.width = this.spriteWidth * this.sizeModifier;
     this.height = this.spriteHeight * this.sizeModifier;
     this.x = 0;
@@ -23,8 +26,8 @@ export class Player {
     this.frameTime = 0;
     this.dx = 0;
     this.dy = 0;
-    this.maxDx = 5;
-    this.maxDy = 5;
+    this.maxDx = 4.5;
+    this.maxDy = 4.5;
     this.states = [new Floating(this.game), new ForwardTravel(this.game), new ReverseTravel(this.game), new UpwardTravel(this.game), new DownwardTravel(this.game), new UpwardForwardTravel(this.game), new UpwardBackTravel(this.game), new DownwardForwardTravel(this.game), new DownwardBackTravel(this.game), new ShootForward(this.game)];
     this.currentState = null;
     this.engineSound = new Audio(engine1);

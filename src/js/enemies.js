@@ -46,7 +46,7 @@ export class Destroyer extends Enemy {
     this.game = game;
     this.spriteWidth = 256;
     this.spriteHeight = 256;
-    this.sizeModifier = Math.random() * 0.95 + .04;
+    this.sizeModifier = Math.random() * 2.25 + .02;
     this.width = this.spriteWidth * this.sizeModifier;
     this.height = this.spriteHeight * this.sizeModifier;
     this.x = this.game.width + Math.random() * this.game.width * 0.5;
@@ -55,14 +55,26 @@ export class Destroyer extends Enemy {
     this.dy = 0;
     this.MaxFrame = 0;
     this.image = document.getElementById('destroyer');
+    this.angle = Math.random() * 100;
+    this.angleSpeed = Math.random() * 2 + .05;
   }
   draw(context){
     if(!this.free){
       if (this.game.debug){
         context.strokeStyle = 'red';
-        context.strokeRect(this.x + this.width * .1, this.y + this.height * .4, this.width * .75, this.height * .20 );
+        context.strokeRect(this.x + this.width * .1, this.y + this.height * .4, this.width, this.height);
       } 
       super.draw(context);
+    }
+  }
+  update(deltaTime){
+    if(!this.free){
+      this.x -= this.dx * deltaTime + this.game.speed;
+      this.y = this.game.height * .5 * Math.cos(this.angle * Math.PI * .00009) + (this.game.height * .5 - this.height);
+      this.angle += this.angleSpeed;
+
+      //check if off screen, then reset.
+      if (this.x < -this.width) this.reset();
     }
   }
 }
@@ -72,7 +84,7 @@ export class DragonCannon extends Enemy {
     this.game = game;
     this.spriteWidth = 228;
     this.spriteHeight = 139;
-    this.sizeModifier = Math.random() * .55 + .05;
+    this.sizeModifier = Math.random() * .50 + .05;
     this.width = this.spriteWidth * this.sizeModifier;
     this.height = this.spriteHeight * this.sizeModifier;
     this.x = this.game.width + Math.random() * this.game.width * 0.5;
