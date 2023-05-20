@@ -2,8 +2,6 @@ import { Floating, ForwardTravel, ReverseTravel, UpwardTravel, DownwardTravel, U
 import engine1 from './../assets/audioEffects/ScatterNoise1.mp3';
 import { RearWeaponSound } from "./sounds";
 
-
-
 export class Player {
   constructor(game){
     this.game = game;
@@ -31,17 +29,18 @@ export class Player {
     this.states = [new Floating(this.game), new ForwardTravel(this.game), new ReverseTravel(this.game), new UpwardTravel(this.game), new DownwardTravel(this.game), new UpwardForwardTravel(this.game), new UpwardBackTravel(this.game), new DownwardForwardTravel(this.game), new DownwardBackTravel(this.game), new ShootForward(this.game)];
     this.currentState = null;
     this.engineSound = new Audio(engine1);
-    this.rearWeaponSoundPool = [];
-    this.maxRearWeaponSound = 30;
-    this.createRearWeaponSoundPool();
+    this.frontWeaponSoundPool = [];
+    this.maxfrontWeaponSound = 30;
+    this.shoot = false;
+    this.createFrontWeaponSoundPool();
 
   }
-  createRearWeaponSoundPool(){
+  createFrontWeaponSoundPool(){
     for (let i = 0; i < this.maxRearWeaponSound; i++){
       this.rearWeaponSoundPool.push(new RearWeaponSound());
     }
   }
-  getRearWeaponSound(){
+  getFrontWeaponSound(){
     for (let i = 0; i < this.rearWeaponSoundPool.length ; i++){
       if (this.rearWeaponSoundPool[i].free){
         return this.rearWeaponSoundPool[i];
@@ -101,7 +100,9 @@ export class Player {
     if (this.frameTimer > this.frameInterval) {
       this.frameTimer = 0;
       if (this.frameX < this.maxFrame) this.frameX++;
-      else this.frameX = 0;
+      else {
+        this.frameX = 0;
+      } 
     } else {
       this.frameTimer += deltaTime;
     }

@@ -1,14 +1,15 @@
-/** @type { HTMLCanvasElement} */
+/** @type { HTMLCanvasElement } */
 import { Background } from "./background.js";
 import { Player } from "./player.js";
 import { InputHandler } from "./input.js";
 import { Asteroid } from "./asteroid.js";
 import { Destroyer, DragonCannon} from "./enemies.js";
-import { ForwardThrusterParticle, ReverseThrusterParticle, projectileParticle } from "./particles.js";
+import { ForwardThrusterParticle, ReverseThrusterParticle} from "./particles.js";
+import { Projectile } from "./projectile.js";
 import { Explosion } from "./explosion.js";
 
 export class Game {
-  constructor( width, height) {
+  constructor(width, height) {
     this.width = width;
     this.height = height;
     this.bottomMargin = 200;
@@ -36,12 +37,12 @@ export class Game {
     this.reverseThrusterParticlePool = [];
     this.maxReverseThrusterParticles = 25;
 
-    this.projectileParticlePool = [];
-    this.maxProjectileParticlePool = 100;
+    this.projectilePool = [];
+    this.maxProjectiles = 25;
 
     this.explosionPool = [];
     this.maxExplosions = 25;
-
+    
     this.collisions = [];
 
     this.background = new Background(this);
@@ -58,7 +59,7 @@ export class Game {
     this.createForwardThrusterParticlePool();
     this.createReverseThrusterParticlePool();
     this.createExplosionPool();
-
+    this.createProjectilePool();
   }
   setGameDimensions(width, height){
     this.width = width;
@@ -127,15 +128,15 @@ export class Game {
       }
     }
   }
-  createProjectileParticlePool(){
-    for (let i = 0; i < this.maxProjectileParticles; i++){
-      this.projectileParticlePool.push(new Asteroid(this));
+  createProjectilePool(){
+    for (let i = 0; i < this.maxProjectiles; i++){
+      this.projectilePool.push(new Projectile(this));
     }
   }
-  getProjectileParticle(){
-    for (let i = 0; i < this.ThrusterParticlePool.length ; i++){
-      if (this.thrusterParticlePool[i].free){
-        return this.thrusterParticlePool[i];
+  getProjectile(){
+    for (let i = 0; i < this.projectilePool.length ; i++){
+      if (this.projectilePool[i].free){
+        return this.projectilePool[i];
       }
     }
   }
@@ -208,10 +209,25 @@ export class Game {
       dragonCannon.draw(context);
       dragonCannon.update(deltaTime);
     });
+
     //explosions
+    const explosion = this.getExplosion();
+    if (explosion) explosion.start();
+
     this.explosionPool.forEach(explosion => {
       explosion.draw(context);
       explosion.update(deltaTime);
+    });
+
+    // front projectile
+    if (this.player.shoot){
+      const projectile = this.getProjectile();
+      if (projectile) projectile.start();
+    }
+
+    this.projectilePool.forEach((projectile) => {
+      projectile.draw(context);
+      projectile.update(deltaTime);
     });
 
     this.player.update(this.input.keys, deltaTime);
@@ -221,11 +237,10 @@ export class Game {
     const forwardThrusterParticle = this.getForwardThrusterParticle();
     if (forwardThrusterParticle) forwardThrusterParticle.start();
     
-    
     const reverseThrusterParticle = this.getReverseThrusterParticle();
     if (reverseThrusterParticle) reverseThrusterParticle.start();
     
-    
+    //Logic for when to render the front and rear thrusters particle effects and for resetting
     if (this.input.keys.includes('ArrowRight')){
       this.forwardThrusterParticlePool.forEach((forwardThrusterParticle) => {
         forwardThrusterParticle.draw(context);
@@ -251,8 +266,7 @@ export class Game {
       });
     }
     
-
-    // //handle collision - rear weapon vs enemy
+    //handle collision - rear weapon vs enemy
     // this.dragonCannonPool.forEach(dragonCannon => {
     //   this.thrusterParticlePool.forEach(thrusterParticle => {
     //     if (!dragonCannon.free && !thrusterParticle.free){ 
@@ -266,13 +280,5 @@ export class Game {
     //     }
     //   });
     // });
-
-    // Particles/frontal projectiles
-    if (this.input.keys.includes('s')){
-      this.projectileParticles.forEach((projectileParticle) => {
-        projectileParticle.updateFrontalProjectile(deltaTime);
-      });
-    }
-
   }
 }
