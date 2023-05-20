@@ -94,11 +94,13 @@ export class DragonCannon extends Enemy {
     }
   }
   update(deltaTime) {
-    this.x -= this.dx * deltaTime + this.game.speed;
-    this.y = this.game.height/2 * Math.sin(this.angle * Math.PI * .00009) + (this.game.height/2 - this.height);
-    this.angle += this.angleSpeed;
+    if(!this.free){
+      this.x -= this.dx * deltaTime + this.game.speed;
+      this.y = this.game.height * .5 * Math.sin(this.angle * Math.PI * .00009) + (this.game.height * .5 - this.height);
+      this.angle += this.angleSpeed;
 
-    //check if off screen, then reset.
-    if (this.x < -this.width) this.reset();
+      //check if off screen, then reset.
+      if (this.x < -this.width) this.reset();
+    }
   }
 }
