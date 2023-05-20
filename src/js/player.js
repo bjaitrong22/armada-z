@@ -1,6 +1,6 @@
 import { Floating, ForwardTravel, ReverseTravel, UpwardTravel, DownwardTravel, UpwardForwardTravel, UpwardBackTravel, DownwardForwardTravel, DownwardBackTravel } from "./playerStates";
 import engine1 from './../assets/audioEffects/ScatterNoise1.mp3';
-import { RearWeaponSound } from "./sounds";
+import { FrontWeaponSound } from "./sounds";
 
 export class Player {
   constructor(game){
@@ -30,44 +30,39 @@ export class Player {
     this.currentState = null;
     this.engineSound = new Audio(engine1);
     this.frontWeaponSoundPool = [];
-    this.maxfrontWeaponSound = 30;
+    this.maxFrontWeaponSound = 50;
     this.shoot = false;
     this.createFrontWeaponSoundPool();
-
   }
   createFrontWeaponSoundPool(){
-    for (let i = 0; i < this.maxRearWeaponSound; i++){
-      this.rearWeaponSoundPool.push(new RearWeaponSound());
+    for (let i = 0; i < this.maxFrontWeaponSound; i++){
+      this.frontWeaponSoundPool.push(new FrontWeaponSound());
     }
   }
   getFrontWeaponSound(){
-    for (let i = 0; i < this.rearWeaponSoundPool.length ; i++){
-      if (this.rearWeaponSoundPool[i].free){
-        return this.rearWeaponSoundPool[i];
+    for (let i = 0; i < this.frontWeaponSoundPool.length; i++){
+      if (this.frontWeaponSoundPool[i].free){
+        return this.frontWeaponSoundPool[i];
       }
     }
   }
   update(input, deltaTime){
     this.currentState.handleInput(input);
-
+  
     //engine thruster sound
     if (this.dy !== 0 || this.dx !== 0){
       this.engineSound.play();
     } else this.engineSound.pause();
 
-    // //rear weapon sound
-    // if (input.includes('ArrowLeft') && input.includes('ArrowRight')){
-    //   this.game.thrusterParticlePool.forEach(thrusterParticle => {
-    //     const rearWeaponSound = this.getRearWeaponSound();
-    //     if(!thrusterParticle.free){ 
-    //       if (rearWeaponSound){
-    //         rearWeaponSound.start();
-    //         rearWeaponSound.play();
-    //       }
-    //     }
-    //     rearWeaponSound.reset();
-    //   });
-    // }
+    //front weapon sound
+    if (this.shoot){
+      const frontWeaponSound = this.getFrontWeaponSound();
+      if (frontWeaponSound){
+        frontWeaponSound.start();
+        frontWeaponSound.play();
+      }
+      frontWeaponSound.reset();
+    }
     
     //horizontal movement
     this.x += this.dx;
@@ -103,7 +98,7 @@ export class Player {
       else {
         this.frameX = 0;
       } 
-    } else {
+    } else{
       this.frameTimer += deltaTime;
     }
   }

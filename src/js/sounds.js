@@ -1,25 +1,27 @@
-import rearWeaponSound from'./../assets/audioEffects/explosionAudio/explosion1.wav';
+import frontWeaponSound from'./../assets/audioEffects/explosionAudio/explosion1.wav';
 
 class Sound {
   constructor(){
-    this.free = true;
+    this.free = true; 
   }
   reset(){
     this.free = true;
+    
   }
   start(){
     this.free = false;
-    this.rearWeaponSound.currentTime = 0;
-
-  } 
+  }  
 }
 
-export class RearWeaponSound extends Sound {
+export class FrontWeaponSound extends Sound {
   constructor(){
     super();
-    this.rearWeaponSound = new Audio(rearWeaponSound);
+    this.frontWeaponSound = new Audio(frontWeaponSound);
   }
   play(){
-    if(!this.free) this.rearWeaponSound.play();
+    if (!this.free){
+      this.frontWeaponSound = new Audio(frontWeaponSound);
+      this.frontWeaponSound.play();    
+    }
   }
 }
