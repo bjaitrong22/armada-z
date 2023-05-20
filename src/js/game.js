@@ -16,19 +16,19 @@ export class Game {
     this.maxSpeed = .3;
 
     this.asteroidPool = [];
-    this.maxAsteroid = 40;
+    this.maxAsteroid = 18;
     this.asteroidTimer = 0;
     this.asteroidInterval = 1500;
 
     this.dragonCannonPool = [];
-    this.maxDragonCannon = 30;
+    this.maxDragonCannon = 7;
     this.dragonCannonTimer = 0;
-    this.dragonCannonInterval = 1000;
+    this.dragonCannonInterval = 2500;
 
     this.destroyerPool = [];
     this.maxDestroyer = 25;
     this.destroyerTimer = 0;
-    this.destroyerInterval = 2500;
+    this.destroyerInterval = 3500;
 
     this.forwardThrusterParticlePool = [];
     this.maxForwardThrusterParticles = 25;
@@ -81,7 +81,7 @@ export class Game {
       this.dragonCannonPool.push(new DragonCannon(this));
     }
     this.dragonCannonPool.sort(function(a,b){
-      return a.y - b.y;
+      return a.width - b.width;
     });
   }
   getDragonCannon(){

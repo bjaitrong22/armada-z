@@ -27,7 +27,6 @@ class Enemy {
   }
   draw(context) {
     if (!this.free){
-      if (this.game.debug) context.strokeRect(this.x, this.y, this.width, this.height);
       context.drawImage(this.image, this.frameX * this.width, 0, this.spriteWidth, this.spriteHeight, this.x, this.y, this.width, this.height);
     }
   }
@@ -57,6 +56,15 @@ export class Destroyer extends Enemy {
     this.MaxFrame = 0;
     this.image = document.getElementById('destroyer');
   }
+  draw(context){
+    if(!this.free){
+      if (this.game.debug){
+        context.strokeStyle = 'red';
+        context.strokeRect(this.x + this.width * .1, this.y + this.height * .4, this.width * .75, this.height * .20 );
+      } 
+      super.draw(context);
+    }
+  }
 }
 export class DragonCannon extends Enemy {
   constructor(game){
@@ -69,9 +77,28 @@ export class DragonCannon extends Enemy {
     this.height = this.spriteHeight * this.sizeModifier;
     this.x = this.game.width + Math.random() * this.game.width * 0.5;
     this.y = Math.random() * this.game.height * 0.5;
-    this.dx = Math.random() * .05 + .15;
+    this.dx = Math.random() * .08 + .02;
     this.dy = 0;
     this.MaxFrame = 0;
     this.image = document.getElementById('dragonCannon');
+    this.angle = Math.random() * 100;
+    this.angleSpeed = Math.random() * 2 + .05;
+  }
+  draw(context){
+    if(!this.free){
+      if (this.game.debug){
+        context.strokeStyle = 'red';
+        context.strokeRect(this.x, this.y + this.height * .45, this.width * .85, this.height * .4 );
+      } 
+      super.draw(context);
+    }
+  }
+  update(deltaTime) {
+    this.x -= this.dx * deltaTime + this.game.speed;
+    this.y = this.game.height/2 * Math.sin(this.angle * Math.PI * .00009) + (this.game.height/2 - this.height);
+    this.angle += this.angleSpeed;
+
+    //check if off screen, then reset.
+    if (this.x < -this.width) this.reset();
   }
 }
