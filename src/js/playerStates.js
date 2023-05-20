@@ -1,4 +1,4 @@
-import { ForwardThrusterParticle, ReverseThrusterParticle, Projectiles } from "./particles.js"; 
+import { ForwardThrusterParticle, ReverseThrusterParticle} from "./particles.js"; 
 
 const states = {
   FLOATING: 0,
@@ -9,8 +9,7 @@ const states = {
   UPWARD_FORWARD: 5,
   UPWARD_BACK: 6,
   DOWNWARD_FORWARD: 7,
-  DOWNWARD_BACK: 8,
-  SHOOT_FORWARD: 9 
+  DOWNWARD_BACK: 8
 };
 
 class State {
@@ -54,8 +53,8 @@ export class Floating extends State {
     } else if (input.includes('ArrowDown') && input.length === 1){
       this.game.player.setState(states.DOWNWARD_TRAVEL, 1);
 
-    } else if (input.includes('s') && input.length === 1){
-      this.game.player.setState(states.SHOOT_FORWARD, 1);
+    } else {
+      this.game.player.setState(states.FLOATING, 1);
     } 
   }
 }
@@ -93,8 +92,8 @@ export class ForwardTravel extends State {
     } else if (input.includes('ArrowDown') && input.length == 1){
       this.game.player.setState(states.DOWNWARD_TRAVEL, 1);
 
-    } else if (input.includes('s')){
-      this.game.player.setState(states.SHOOT_FORWARD, 1);
+    } else {
+      this.game.player.setState(states.FLOATING, 1);
     } 
   }
 }
@@ -128,8 +127,8 @@ export class UpwardForwardTravel extends State {
     } else if (input.includes('ArrowDown') && input.length == 1){
       this.game.player.setState(states.DOWNWARD_TRAVEL, 1);
 
-    } else if (input.includes('s')){
-      this.game.player.setState(states.SHOOT_FORWARD, 1);
+    } else {
+      this.game.player.setState(states.FLOATING, 1);
     } 
   }
 }
@@ -163,8 +162,8 @@ export class DownwardForwardTravel extends State {
     } else if (input.includes('ArrowDown') && input.length == 1){
       this.game.player.setState(states.DOWNWARD_TRAVEL, 1);
 
-    } else if (input.includes('s')){
-      this.game.player.setState(states.SHOOT_FORWARD, 1);
+    } else {
+      this.game.player.setState(states.FLOATING, 1);
     } 
   }
 }
@@ -201,8 +200,8 @@ export class ReverseTravel extends State {
     } else if (input.includes('ArrowDown') && input.length == 1){
       this.game.player.setState(states.DOWNWARD_TRAVEL, 1);
 
-    }else if (input.includes('s')){
-      this.game.player.setState(states.SHOOT_FORWARD, 1);
+    } else {
+      this.game.player.setState(states.FLOATING, 1);
     }  
   }
 }
@@ -236,8 +235,8 @@ export class UpwardBackTravel extends State {
     } else if (input.includes('ArrowDown') && input.length == 1){
       this.game.player.setState(states.DOWNWARD_TRAVEL, 1);
 
-    }else if (input.includes('s')){
-      this.game.player.setState(states.SHOOT_FORWARD, 1);
+    } else {
+      this.game.player.setState(states.FLOATING, 1);
     }  
   }
 }
@@ -271,8 +270,8 @@ export class DownwardBackTravel extends State {
     } else if (input.includes('ArrowDown') && input.length == 1){
       this.game.player.setState(states.DOWNWARD_TRAVEL, 1);
 
-    }else if (input.includes('s')){
-      this.game.player.setState(states.SHOOT_FORWARD, 1);
+    } else {
+      this.game.player.setState(states.FLOATING, 1);
     }  
   }
 }
@@ -309,8 +308,8 @@ export class UpwardTravel extends State {
     } else if (input.includes('ArrowDown') && input.length == 1){
       this.game.player.setState(states.DOWNWARD_TRAVEL, 1);
 
-    } else if (input.includes('s')){
-      this.game.player.setState(states.SHOOT_FORWARD, 1);
+    } else {
+      this.game.player.setState(states.FLOATING, 1);
     }  
   }
 }
@@ -347,32 +346,8 @@ export class DownwardTravel extends State {
     } else if (input.includes('ArrowUp') && input.length == 1){
       this.game.player.setState(states.UPWARD_TRAVEL, 1);
 
-    } else if (input.includes('s')){
-      this.game.player.setState(states.SHOOT_FORWARD, 1);
+    } else {
+      this.game.player.setState(states.FLOATING, 1);
     } 
   }
-}
-export class ShootForward extends State {
-  constructor(game){
-    super('SHOOT_FORWARD', game);
-  }
-  // enter(){
-  //   this.game.player.frameX = 0;
-  //   this.game.player.maxFrame = 0;
-  //   this.game.player.frameY = 0;
-  // }
-  // handleInput(input){
-  //   if (input.includes('s')){      
-  //     this.game.projectileParticlePool.unshift(new Projectiles(this.game,this.game.player.x + this.game.player.width * .8, this.game.player.y + this.game.player.height * 0.8));
-  //   }     
-
-  //   if (input.includes('ArrowLeft') || input.includes('ArrowRight')){
-  //     this.game.player.setState(states.HORIZONTAL_TRAVEL, 1);
-  //   } else if (input.includes('Enter')){
-  //     this.game.player.setState(states.FLOATING, 0);
-  //   }
-  //   if (input.includes('ArrowUp') || input.includes('ArrowDown')){
-  //     this.game.player.setState(states.VERTICAL_TRAVEL, 1);
-  //   }
-  // }
 }

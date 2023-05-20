@@ -1,4 +1,4 @@
-import { Floating, ForwardTravel, ReverseTravel, UpwardTravel, DownwardTravel, UpwardForwardTravel, UpwardBackTravel, DownwardForwardTravel, DownwardBackTravel,ShootForward } from "./playerStates";
+import { Floating, ForwardTravel, ReverseTravel, UpwardTravel, DownwardTravel, UpwardForwardTravel, UpwardBackTravel, DownwardForwardTravel, DownwardBackTravel } from "./playerStates";
 import engine1 from './../assets/audioEffects/ScatterNoise1.mp3';
 import { RearWeaponSound } from "./sounds";
 
@@ -26,7 +26,7 @@ export class Player {
     this.dy = 0;
     this.maxDx = 4.5;
     this.maxDy = 4.5;
-    this.states = [new Floating(this.game), new ForwardTravel(this.game), new ReverseTravel(this.game), new UpwardTravel(this.game), new DownwardTravel(this.game), new UpwardForwardTravel(this.game), new UpwardBackTravel(this.game), new DownwardForwardTravel(this.game), new DownwardBackTravel(this.game), new ShootForward(this.game)];
+    this.states = [new Floating(this.game), new ForwardTravel(this.game), new ReverseTravel(this.game), new UpwardTravel(this.game), new DownwardTravel(this.game), new UpwardForwardTravel(this.game), new UpwardBackTravel(this.game), new DownwardForwardTravel(this.game), new DownwardBackTravel(this.game)];
     this.currentState = null;
     this.engineSound = new Audio(engine1);
     this.frontWeaponSoundPool = [];
