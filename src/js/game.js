@@ -7,6 +7,8 @@ import { Destroyer, DragonCannon} from "./enemies.js";
 import { ForwardThrusterParticle, ReverseThrusterParticle} from "./particles.js";
 import { Projectile } from "./projectile.js";
 import { Explosion } from "./explosion.js";
+import { GameMessage } from "./gameMessages.js";
+import {UI} from "./UI.js";
 
 export class Game {
   constructor(width, height) {
@@ -41,13 +43,23 @@ export class Game {
     this.maxProjectiles = 15;
 
     this.explosionPool = [];
-    this.maxExplosions = 25;
+    this.maxExplosions = 100;
     
     this.background = new Background(this);
     this.player = new Player(this);
     this.input = new InputHandler(this);
     this.debug = false;
+    
+    this.UI = new UI(this);
+    this.gameMessages = [];
+    this.score = 0;
+    this.winningScore = 100;
+    this.fontColor = 'white';
     this.time = 0;
+    this.maxTime = 45000;
+    this.gameOver = false;
+    this.lives = 5;
+
     this.player.currentState =  this.player.states[0];
     this.player.currentState.enter();
 
@@ -273,6 +285,8 @@ export class Game {
             if (explosion){
               explosion.start(dragonCannon.x, dragonCannon.y, dragonCannon.dx * -.90);
               explosion.playExplosionSound = true;
+              this.score += 100;
+              this.gameMessages.push(new GameMessage('KA-BAM! NEUTRALIIIZED!! +EZ100', dragonCannon.x, dragonCannon.y, this.width * .5 + 20, 50));
               dragonCannon.reset();
               projectile.reset();
             } 
@@ -286,14 +300,23 @@ export class Game {
           if (this.checkCollision(destroyer, projectile)){
             const explosion = this.getExplosion();
             if (explosion){
+              this.score += 50; 
               explosion.start(destroyer.x, destroyer.y, destroyer.dx * -.90);
               explosion.playExplosionSound = true;
+              this.gameMessages.push(new GameMessage('KA-BOOM! +50', destroyer.x, destroyer.y, this.width * .5 + 20 , 50));
               destroyer.reset();
               projectile.reset();
-            } 
+            }
           }
         }
       });
     });
+    //handle messages
+    this.gameMessages.forEach(message => {
+      message.update();
+      message.draw(context);
+    });
+    this.UI.draw(context);
+    this.gameMessages = this.gameMessages.filter( message => !message.markedForDeletion);
   }
 }
