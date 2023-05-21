@@ -212,7 +212,7 @@ export class Game {
 
     //explosions
     const explosion = this.getExplosion();
-    if (explosion) explosion.start();
+    if (explosion) explosion.start(this.x, this.y, 0);
 
     this.explosionPool.forEach(explosion => {
       explosion.draw(context);
@@ -273,7 +273,8 @@ export class Game {
           if (this.checkCollision(dragonCannon, projectile)){
             const explosion = this.getExplosion();
             if (explosion){
-              explosion.start(dragonCannon.x, dragonCannon.y);
+              explosion.start(dragonCannon.x, dragonCannon.y, dragonCannon.dx * -.90);
+              explosion.playExplosionSound = true;
               dragonCannon.reset();
               projectile.reset();
             } 
