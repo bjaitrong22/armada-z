@@ -8,7 +8,9 @@ import { ForwardThrusterParticle, ReverseThrusterParticle} from "./particles.js"
 import { Projectile } from "./projectile.js";
 import { Explosion } from "./explosion.js";
 import { GameMessage } from "./gameMessages.js";
-import {UI} from "./UI.js";
+import { UI } from "./UI.js";
+import floatingStateMusic from './../assets/music/floatingState/throughSpace.ogg';
+import waitingMusic from './../assets/music/floatingState/enchantedTiki86.mp3';
 
 export class Game {
   constructor(width, height) {
@@ -60,6 +62,8 @@ export class Game {
     this.gameOver = false;
     this.lives = 5;
 
+    this.musicOptions = [floatingStateMusic, waitingMusic];
+    this.music = new Audio(this.musicOptions[Math.floor(Math.random() * this.musicOptions.length)]);
     this.player.currentState =  this.player.states[0];
     this.player.currentState.enter();
 
@@ -178,7 +182,12 @@ export class Game {
     this.time += deltaTime;
     this.background.draw(context);
     this.background.update();
-    
+
+    //music
+    if (this.player.currentState === this.player.states[0]) {
+      this.music.play();
+    } else this.music.pause();
+
     // Periodically creates asteroids
     if (this.asteroidTimer > this.asteroidInterval){
       const asteroid = this.getAsteroid();
