@@ -38,7 +38,7 @@ export class Game {
     this.maxReverseThrusterParticles = 25;
 
     this.projectilePool = [];
-    this.maxProjectiles = 25;
+    this.maxProjectiles = 15;
 
     this.explosionPool = [];
     this.maxExplosions = 25;
@@ -153,17 +153,17 @@ export class Game {
     }
   }
   checkCollision(a,b){
-    if (a.x > b.x + b.width ||
-        a.x + a.width < b.x ||
-        a.y > b.y + b.height ||
-        a.y + a.height < b.y
+    if (a.hitBox.x > b.hitBox.x + b.hitBox.width ||
+        a.hitBox.x + a.hitBox.width < b.hitBox.x ||
+        a.hitBox.y > b.hitBox.y + b.hitBox.height ||
+        a.hitBox.y + a.hitBox.height < b.hitBox.y
     ){
       return false;
     } else {
       return true;
     } 
-
   }
+  
   render(context, deltaTime){
     this.time += deltaTime;
     this.background.draw(context);
@@ -266,19 +266,20 @@ export class Game {
       });
     }
     
-    //handle collision - rear weapon vs enemy
-    // this.dragonCannonPool.forEach(dragonCannon => {
-    //   this.thrusterParticlePool.forEach(thrusterParticle => {
-    //     if (!dragonCannon.free && !thrusterParticle.free){ 
-    //       if (this.checkCollision(dragonCannon, thrusterParticle)){
-    //         const explosion = this.getExplosion();
-    //         if (explosion){
-    //           explosion.start(dragonCannon.x, dragonCannon.y);
-    //           dragonCannon.reset();
-    //         } 
-    //       }
-    //     }
-    //   });
-    // });
+    //handle collision - weapon vs enemy
+    this.dragonCannonPool.forEach(dragonCannon => {
+      this.projectilePool.forEach(projectile => {
+        if (!dragonCannon.free && !projectile.free){ 
+          if (this.checkCollision(dragonCannon, projectile)){
+            const explosion = this.getExplosion();
+            if (explosion){
+              explosion.start(dragonCannon.x, dragonCannon.y);
+              dragonCannon.reset();
+              projectile.reset();
+            } 
+          }
+        }
+      });
+    });
   }
 }

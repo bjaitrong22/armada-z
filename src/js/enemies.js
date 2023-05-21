@@ -59,7 +59,7 @@ export class Destroyer extends Enemy {
     this.angleSpeed = Math.random() * 2 + .05;
   }
   draw(context){
-    if(!this.free){
+    if (!this.free){
       if (this.game.debug){
         context.strokeStyle = 'red';
         context.strokeRect(this.x + this.width * .1, this.y + this.height * .4, this.width, this.height);
@@ -68,7 +68,7 @@ export class Destroyer extends Enemy {
     }
   }
   update(deltaTime){
-    if(!this.free){
+    if (!this.free){
       this.x -= this.dx * deltaTime + this.game.speed;
       this.y = this.game.height * .5 * Math.cos(this.angle * Math.PI * .00009) + (this.game.height * .5 - this.height);
       this.angle += this.angleSpeed;
@@ -87,28 +87,40 @@ export class DragonCannon extends Enemy {
     this.sizeModifier = Math.random() * .50 + .05;
     this.width = this.spriteWidth * this.sizeModifier;
     this.height = this.spriteHeight * this.sizeModifier;
+
     this.x = this.game.width + Math.random() * this.game.width * 0.5;
     this.y = Math.random() * this.game.height * 0.5;
     this.dx = Math.random() * .08 + .02;
     this.dy = 0;
-    this.MaxFrame = 0;
-    this.image = document.getElementById('dragonCannon');
+    this.hitBox = {x: this.x,
+      y: this.y + this.height * .45,
+      width: this.width * .85,
+      height: this.height * .40
+      };
     this.angle = Math.random() * 100;
     this.angleSpeed = Math.random() * 2 + .05;
+
+    this.MaxFrame = 0;
+    this.image = document.getElementById('dragonCannon');
+    
   }
   draw(context){
-    if(!this.free){
+    if (!this.free){
       if (this.game.debug){
         context.strokeStyle = 'red';
-        context.strokeRect(this.x, this.y + this.height * .45, this.width * .85, this.height * .4 );
+        context.strokeRect(this.x, this.y + this.height * .25, this.width * .95, this.height * .6 );
       } 
       super.draw(context);
     }
   }
   update(deltaTime) {
-    if(!this.free){
+    if (!this.free){
       this.x -= this.dx * deltaTime + this.game.speed;
       this.y = this.game.height * .5 * Math.sin(this.angle * Math.PI * .00009) + (this.game.height * .5 - this.height);
+      this.hitBox.x = this.x;
+      this.hitBox.y = this.y + this.height * .25;
+      this.hitBox.width = this.width * .95;
+      this.hitBox.height = this.height * .6 ;
       this.angle += this.angleSpeed;
 
       //check if off screen, then reset.

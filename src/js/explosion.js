@@ -1,19 +1,19 @@
 export class Explosion {
   constructor(game){
     this.game = game;
+    this.free = true;
     this.x = 0;
     this.y = 0;
     this.speed = 0;
     this.image = document.getElementById('explosions');
     this.spriteWidth = 300;
     this.spriteHeight = 300;
-    this.free = true;
     this.frameX = 0;
     this.frameY = Math.floor(Math.random() * 3);
     this.maxFrame = 22;
     this.animationTimer = 0;
     this.fps = 10;
-    this.animationInterval = 1000 * .04;
+    this.animationInterval = 1000 * .10;
   }
   draw(context){
     if (!this.free){
