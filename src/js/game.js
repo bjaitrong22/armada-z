@@ -43,8 +43,6 @@ export class Game {
     this.explosionPool = [];
     this.maxExplosions = 25;
     
-    this.collisions = [];
-
     this.background = new Background(this);
     this.player = new Player(this);
     this.input = new InputHandler(this);
