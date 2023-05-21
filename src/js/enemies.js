@@ -44,17 +44,24 @@ export class Destroyer extends Enemy {
   constructor(game){
     super();
     this.game = game;
+    this.image = document.getElementById('destroyer');
     this.spriteWidth = 256;
     this.spriteHeight = 256;
     this.sizeModifier = Math.random() * 2.25 + .02;
     this.width = this.spriteWidth * this.sizeModifier;
     this.height = this.spriteHeight * this.sizeModifier;
+
     this.x = this.game.width + Math.random() * this.game.width * 0.5;
     this.y = Math.random() * this.game.height * 0.5;
     this.dx = Math.random() * 0.05 + .01;
     this.dy = 0;
+    this.hitBox = {x: this.x + this.width * .10,
+      y: this.y + this.height * .38,
+      width: this.width * .75,
+      height: this.height * .20
+    };
+
     this.MaxFrame = 0;
-    this.image = document.getElementById('destroyer');
     this.angle = Math.random() * 100;
     this.angleSpeed = Math.random() * 2 + .05;
   }
@@ -62,7 +69,7 @@ export class Destroyer extends Enemy {
     if (!this.free){
       if (this.game.debug){
         context.strokeStyle = 'red';
-        context.strokeRect(this.x + this.width * .1, this.y + this.height * .4, this.width, this.height);
+        context.strokeRect(this.x + this.width * .10, this.y + this.height * .38, this.width * .75, this.height * .20);
       } 
       super.draw(context);
     }
@@ -72,6 +79,10 @@ export class Destroyer extends Enemy {
       this.x -= this.dx * deltaTime + this.game.speed;
       this.y = this.game.height * .5 * Math.cos(this.angle * Math.PI * .00009) + (this.game.height * .5 - this.height);
       this.angle += this.angleSpeed;
+      this.hitBox.x = this.x;
+      this.hitBox.y = this.y;
+      this.hitBox.width = this.width * .80;
+      this.hitBox.height = this.height * .45;
 
       //check if off screen, then reset.
       if (this.x < -this.width) this.reset();
@@ -82,6 +93,7 @@ export class DragonCannon extends Enemy {
   constructor(game){
     super();
     this.game = game;
+    this.image = document.getElementById('dragonCannon');
     this.spriteWidth = 228;
     this.spriteHeight = 139;
     this.sizeModifier = Math.random() * .50 + .05;
@@ -96,13 +108,11 @@ export class DragonCannon extends Enemy {
       y: this.y + this.height * .45,
       width: this.width * .85,
       height: this.height * .40
-      };
+    };
     this.angle = Math.random() * 100;
     this.angleSpeed = Math.random() * 2 + .05;
 
     this.MaxFrame = 0;
-    this.image = document.getElementById('dragonCannon');
-    
   }
   draw(context){
     if (!this.free){

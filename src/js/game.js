@@ -266,7 +266,7 @@ export class Game {
       });
     }
     
-    //handle collision - weapon vs enemy
+    //handle collision - weapon vs Enemy
     this.dragonCannonPool.forEach(dragonCannon => {
       this.projectilePool.forEach(projectile => {
         if (!dragonCannon.free && !projectile.free){ 
@@ -276,6 +276,21 @@ export class Game {
               explosion.start(dragonCannon.x, dragonCannon.y, dragonCannon.dx * -.90);
               explosion.playExplosionSound = true;
               dragonCannon.reset();
+              projectile.reset();
+            } 
+          }
+        }
+      });
+    });
+    this.destroyerPool.forEach(destroyer => {
+      this.projectilePool.forEach(projectile => {
+        if (!destroyer.free && !projectile.free){ 
+          if (this.checkCollision(destroyer, projectile)){
+            const explosion = this.getExplosion();
+            if (explosion){
+              explosion.start(destroyer.x, destroyer.y, destroyer.dx * -.90);
+              explosion.playExplosionSound = true;
+              destroyer.reset();
               projectile.reset();
             } 
           }
