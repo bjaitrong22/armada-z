@@ -15,7 +15,7 @@ export class GameMessage {
     if (this.timer > 400) this.markedForDeletion = true;
   }
   draw(context){
-    context.font = '20' + 'px ' + 'fantasy';
+    context.font = '20' + 'px ' + 'Bangers';
     context.fillStyle = 'red';
     context.fillText(this.value, this.x, this.y);
     context.fillStyle = 'white';
