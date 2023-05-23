@@ -36,10 +36,10 @@ export class Game {
     this.destroyerInterval = 3100;
 
     this.forwardThrusterParticlePool = [];
-    this.maxForwardThrusterParticles = 25;
+    this.maxForwardThrusterParticles = 5;
 
     this.reverseThrusterParticlePool = [];
-    this.maxReverseThrusterParticles = 25;
+    this.maxReverseThrusterParticles = 5;
 
     this.projectilePool = [];
     this.maxProjectiles = 15;
@@ -184,8 +184,9 @@ export class Game {
     this.background.update();
 
     //music
-    if (this.player.currentState === this.player.states[0]) {
+    if (this.player.states.length !== 0) {
       this.music.play();
+      this.music.volume = .45;
     } else this.music.pause();
 
     // Periodically creates asteroids
