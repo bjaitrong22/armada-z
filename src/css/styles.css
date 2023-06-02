@@ -19,7 +19,7 @@ html,body {
   box-sizing: border-box;
 }
 
-#gameName {
+#gameName, #gameOver {
   font-family:'Bangers';
   font-size: 3.5em;
   color: white;
@@ -35,7 +35,7 @@ html,body {
   text-shadow: 2px 2px #FF0000;
 }
 
-#startButton {
+#startButton,#playAgainButton {
   font-family:'Bangers';
   color: white;
   position:fixed;
@@ -56,7 +56,7 @@ html,body {
   display: inline-block;
 }
 
-#startButton:hover {
+#startButton:hover, #playAgainButton:hover {
   background-color: #f01d0a; 
   color:#141211;
 }

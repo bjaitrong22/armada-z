@@ -11,9 +11,16 @@ window.addEventListener('load', function(){
   canvas.height = window.innerHeight;
 
   const startGameButton = document.getElementById('startButton');
-
+  const playAgainButton = document.getElementById('playAgainButton');
+  
   const game = new Game(canvas.width, canvas.height);
   let lastTime = 0;
+
+  window.addEventListener("resize", function(){
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+    game.setGameDimensions(canvas.width, canvas.height);
+  });
 
   startGameButton.addEventListener('click', function () {
     const gameName = document.getElementById('gameName');
@@ -23,14 +30,24 @@ window.addEventListener('load', function(){
     start();
   });
 
+  playAgainButton.addEventListener('click', function () {
+    location.reload();
+  });
+
   function start() {
-    window.addEventListener("resize", function(){
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
-      game.setGameDimensions(canvas.width, canvas.height);
-    });
-    
+    // window.addEventListener("resize", function(){
+    //   canvas.width = window.innerWidth;
+    //   canvas.height = window.innerHeight;
+    //   game.setGameDimensions(canvas.width, canvas.height);
+    // });
+    game.playMusic = true;
     animate(0);
+  }
+
+  function gameOver() {
+    const gameOver = document.getElementById('gameOver');
+    gameOver.removeAttribute('class');
+    canvas.setAttribute('class', 'hidden');
   }
   
   function animate(timeStamp) {
@@ -38,7 +55,11 @@ window.addEventListener('load', function(){
     lastTime = timeStamp;
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     game.render(ctx, deltaTime);
-    requestAnimationFrame(animate);
+
+    if (!game.gameOver){
+      requestAnimationFrame(animate);
+    } else {
+      gameOver();
+    }
   }
-  
 });

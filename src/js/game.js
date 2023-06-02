@@ -58,12 +58,13 @@ export class Game {
     this.winningScore = 100;
     this.fontColor = 'white';
     this.time = 0;
-    this.maxTime = 45000;
+    this.maxTime = 60000;
     this.gameOver = false;
     this.lives = 5;
 
     this.musicOptions = [floatingStateMusic, waitingMusic];
     this.music = new Audio(this.musicOptions[Math.floor(Math.random() * this.musicOptions.length)]);
+    this.playMusic = false;
     this.player.currentState =  this.player.states[0];
     this.player.currentState.enter();
 
@@ -79,6 +80,7 @@ export class Game {
     this.width = width;
     this.height = height;
   }
+  
   createAsteroidPool(){
     for (let i = 0; i < this.maxAsteroid; i++){
       this.asteroidPool.push(new Asteroid(this));
@@ -183,8 +185,12 @@ export class Game {
     this.background.draw(context);
     this.background.update();
 
+    if (this.time > this.maxTime) {
+      this.gameOver = true;
+    }
+
     //music
-    if (this.player.states.length !== 0) {
+    if (this.playMusic) {
       this.music.play();
       this.music.volume = .45;
     } else this.music.pause();
