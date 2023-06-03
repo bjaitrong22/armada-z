@@ -5,12 +5,9 @@ import { FrontWeaponSound } from "./sounds";
 export class Player {
   constructor(game){
     this.game = game;
-    this.spriteWidth = 150;
-    this.spriteHeight = 54;
-    // this.spriteWidth = 256;
-    // this.spriteHeight = 256;
-    //this.sizeModifier = .314;
-    this.sizeModifier = .25;
+    this.spriteWidth = 477;
+    this.spriteHeight = 181;
+    this.sizeModifier = .12;
     this.width = this.spriteWidth * this.sizeModifier;
     this.height = this.spriteHeight * this.sizeModifier;
     this.x = 0;
@@ -28,6 +25,7 @@ export class Player {
     this.maxDy = 4.5;
     this.states = [new Floating(this.game), new ForwardTravel(this.game), new ReverseTravel(this.game), new UpwardTravel(this.game), new DownwardTravel(this.game), new UpwardForwardTravel(this.game), new UpwardBackTravel(this.game), new DownwardForwardTravel(this.game), new DownwardBackTravel(this.game)];
     this.currentState = null;
+    
     this.engineSound = new Audio(engine1);
     this.frontWeaponSoundPool = [];
     this.maxFrontWeaponSound = 50;
@@ -37,6 +35,7 @@ export class Player {
   createFrontWeaponSoundPool(){
     for (let i = 0; i < this.maxFrontWeaponSound; i++){
       this.frontWeaponSoundPool.push(new FrontWeaponSound());
+      this.frontWeaponSoundPool[i].volume = .99;
     }
   }
   getFrontWeaponSound(){
