@@ -1,7 +1,7 @@
 /** @type { HTMLCanvasElement} */
 
-import './css/styles.css';
-import { Game } from "./js/game.js";
+import './../css/styles.css';
+import { Game } from "./game.js";
 
 window.addEventListener('load', function(){
 
