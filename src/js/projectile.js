@@ -5,7 +5,7 @@ export class Projectile {
     this.image = document.getElementById('projectile');
     this.spriteWidth = 124;
     this.spriteHeight = 108;
-    this.sizeModifier = .35
+    this.sizeModifier = .35;
     this.width = this.spriteWidth * this.sizeModifier;
     this.height = this.spriteHeight * this.sizeModifier;
 
@@ -17,7 +17,7 @@ export class Projectile {
       y: this.y,
       width: this.width,
       height: this.height
-      };
+    };
     this.angle = 0;
     this.angularVelocity = Math.random() * 0.2 - 0.1;
 
@@ -25,8 +25,8 @@ export class Projectile {
     this.frameY = 0;
     this.maxFrame = 5;
     this.animationTimer = 0;
-    this.fps = 7;
-    this.animationInterval = 1000/this.fps;
+    this.fpsInverse = .143;
+    this.animationInterval = 1000 * this.fpsInverse;
 
   }
   draw(context){
