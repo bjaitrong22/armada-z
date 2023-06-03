@@ -31,21 +31,20 @@ window.addEventListener('load', function(){
   });
 
   playAgainButton.addEventListener('click', function () {
+    document.getElementById("finalScore").innerText = null;
     location.reload();
   });
 
   function start() {
-    // window.addEventListener("resize", function(){
-    //   canvas.width = window.innerWidth;
-    //   canvas.height = window.innerHeight;
-    //   game.setGameDimensions(canvas.width, canvas.height);
-    // });
     game.playMusic = true;
     animate(0);
   }
 
   function gameOver() {
     const gameOver = document.getElementById('gameOver');
+    const finalScore = game.score;
+
+    document.getElementById("finalScore").innerText = 'Score: ' + finalScore;
     gameOver.removeAttribute('class');
     canvas.setAttribute('class', 'hidden');
   }
