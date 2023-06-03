@@ -9,7 +9,7 @@ const states = {
   UPWARD_FORWARD: 5,
   UPWARD_BACK: 6,
   DOWNWARD_FORWARD: 7,
-  DOWNWARD_BACK: 8
+  DOWNWARD_BACK: 8,
 };
 
 class State {
@@ -93,7 +93,7 @@ export class ForwardTravel extends State {
       this.game.player.setState(states.DOWNWARD_TRAVEL, 1);
 
     } else {
-      this.game.player.setState(states.FLOATING, 1);
+      this.game.player.setState(states.FORWARD_TRAVEL, 1);
     } 
   }
 }
@@ -128,7 +128,7 @@ export class UpwardForwardTravel extends State {
       this.game.player.setState(states.DOWNWARD_TRAVEL, 1);
 
     } else {
-      this.game.player.setState(states.FLOATING, 1);
+      this.game.player.setState(states.UPWARD_FORWARD, 1);
     } 
   }
 }
@@ -163,7 +163,7 @@ export class DownwardForwardTravel extends State {
       this.game.player.setState(states.DOWNWARD_TRAVEL, 1);
 
     } else {
-      this.game.player.setState(states.FLOATING, 1);
+      this.game.player.setState(states.DOWNWARD_FORWARD, 1);
     } 
   }
 }
@@ -201,7 +201,7 @@ export class ReverseTravel extends State {
       this.game.player.setState(states.DOWNWARD_TRAVEL, 1);
 
     } else {
-      this.game.player.setState(states.FLOATING, 1);
+      this.game.player.setState(states.REVERSE_TRAVEL, 1);
     }  
   }
 }
@@ -236,7 +236,7 @@ export class UpwardBackTravel extends State {
       this.game.player.setState(states.DOWNWARD_TRAVEL, 1);
 
     } else {
-      this.game.player.setState(states.FLOATING, 1);
+      this.game.player.setState(states.UPWARD_BACK, 1);
     }  
   }
 }
@@ -271,7 +271,7 @@ export class DownwardBackTravel extends State {
       this.game.player.setState(states.DOWNWARD_TRAVEL, 1);
 
     } else {
-      this.game.player.setState(states.FLOATING, 1);
+      this.game.player.setState(states.DOWNWARD_BACK, 1);
     }  
   }
 }
@@ -309,7 +309,7 @@ export class UpwardTravel extends State {
       this.game.player.setState(states.DOWNWARD_TRAVEL, 1);
 
     } else {
-      this.game.player.setState(states.FLOATING, 1);
+      this.game.player.setState(states.UPWARD_TRAVEL, 1);
     }  
   }
 }
@@ -347,7 +347,7 @@ export class DownwardTravel extends State {
       this.game.player.setState(states.UPWARD_TRAVEL, 1);
 
     } else {
-      this.game.player.setState(states.FLOATING, 1);
+      this.game.player.setState(states.DOWNWARD_TRAVEL, 1);
     } 
   }
 }
