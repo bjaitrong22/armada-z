@@ -16,8 +16,8 @@ export class Explosion {
     this.maxFrame = 22;
 
     this.animationTimer = 0;
-    this.fps = 10;
-    this.animationInterval = 1000 * .10;
+    this.fpsInverse = .10;
+    this.animationInterval = 1000 * this.fpsInverse;
 
     this.explosionSoundPool = [];
     this.maxExplosionSound = 15;
@@ -35,6 +35,7 @@ export class Explosion {
   createExplosionSoundPool(){
     for (let i = 0; i < this.maxExplosionSound; i++){
       this.explosionSoundPool.push(new ExplosionSound());
+      this.explosionSoundPool[i].volume = 1;
     }
   }
   getExplosionSound(){
