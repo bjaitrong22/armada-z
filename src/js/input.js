@@ -30,10 +30,14 @@ export class InputHandler {
             this.keys.splice(this.keys.indexOf('ArrowDown'), 1);
           }
         }
+        this.game.player.thrusterSound.play();
         this.keys.push(e.key);
       } else if (e.key === 'd' || e.key === ' '){
         if (e.key === 'd') this.game.debug = !this.game.debug;
-        else this.game.player.shoot = true;
+        else {
+          this.game.player.shoot = true;
+          this.game.player.frontWeaponSound.play();
+        }
       } 
 
     });
@@ -43,8 +47,12 @@ export class InputHandler {
         e.key === 'ArrowLeft' ||
         e.key === 'ArrowRight' ||
         e.key === 'Enter'){
+        this.game.player.thrusterSound.stop();
         this.keys.splice(this.keys.indexOf(e.key), 1);
-      } else if (e.key === ' ') this.game.player.shoot = false;
+      } else if (e.key === ' ') {
+        this.game.player.shoot = false;
+        this.game.player.frontWeaponSound.stop();
+      } 
     });
   }
 }

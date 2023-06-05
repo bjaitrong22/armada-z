@@ -36,7 +36,7 @@ window.addEventListener('load', function(){
   });
 
   function start() {
-    game.playMusic = true;
+    game.music.play();
     animate(0);
   }
 

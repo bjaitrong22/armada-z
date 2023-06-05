@@ -1,55 +1,77 @@
+import thruster1 from './../assets/audioEffects/ScatterNoise1.mp3';
 import frontWeaponSound from'./../assets/audioEffects/explosionAudio/explosion1.wav';
 import explosionSound2 from './../assets/audioEffects/impactAudio/explosion2.wav';
 import explosionSound3 from './../assets/audioEffects/impactAudio/explosion3.wav';
 import explosionSound4 from './../assets/audioEffects/impactAudio/explosion4.wav';
 import explosionSound5 from './../assets/audioEffects/impactAudio/hjm-big_explosion_3.wav';
 import explosionSound6 from './../assets/audioEffects/impactAudio/NenadSimic - Muffled Distant Explosion.wav';
+import backgroundMusic1 from './../assets/music/floatingState/throughSpace.ogg';
+import backgroundMusic2 from './../assets/music/floatingState/enchantedTiki86.mp3';
+import { Howl, Howler } from 'howler';
 
-class Sound {
-  constructor(game){
-    this.game = game;
-    this.free = true; 
-  }
-  reset(){
-    this.free = true;    
-  }
-  start(){
-    this.free = false;
-  }  
-}
-
-export class FrontWeaponSound extends Sound {
+export class ThrusterSound {
   constructor(){
-    super();
-    this.frontWeaponSound = new Audio(frontWeaponSound);
-    this.frontWeaponSound.volume = .10;
+    this.thrusterSound = new Howl({
+      src: [thruster1],
+      volume: 1.0
+    }); 
   }
-  play(){
-    
-    if (!this.free){
-      this.frontWeaponSound.currentTime = 0; 
-      this.frontWeaponSound.play();
-    }
+  play() {
+    this.thrusterSound.play();
+  }
+  stop() {
+    this.thrusterSound.stop();
   }
 }
 
-export class ExplosionSound extends Sound {
+export class FrontWeaponSound {
+  constructor(){
+    this.frontWeaponSound = new Howl({
+      src: [frontWeaponSound],
+      volume: 0.30
+    }); 
+  }
+  play() {
+    this.frontWeaponSound.play();
+  }
+  stop() {
+    this.frontWeaponSound.stop();
+  }
+}
+
+export class ExplosionSound {
   constructor() {
-    super();
     this.explosionSoundsOptions = [explosionSound2, explosionSound3, explosionSound4, explosionSound5,explosionSound6];
-    this.explosionSound = this.explosionSoundsOptions[Math.floor(Math.random() * this.explosionSoundsOptions.length)];
-    this.exploSound = new Audio(this.explosionSound);
-    this.exploSound.volume = 1;
-  }
+    this.chosenExplosionSound = this.explosionSoundsOptions[Math.floor(Math.random() * (this.explosionSoundsOptions.length - 1))];
 
-  play(){
-    if (!this.free){
-      this.exploSound.play();    
-    }
+    this.explosionSound = new Howl({
+      src: [this.chosenExplosionSound],
+      volume: 1.0
+    }); 
   }
-  start(){
-    this.free = false;
-    this.explosionSound = this.explosionSoundsOptions[Math.floor(Math.random() * this.explosionSoundsOptions.length)];
-  }  
+  play() {
+    this.explosionSound.play();
+  }
+  stop() {
+    this.explosionSound.stop();
+  }
+}
 
+export class BackgroundMusic {
+  constructor() {
+    this.backgroundMusicOptions = [backgroundMusic1, backgroundMusic2];
+    this.chosenBackgroundMusic =  this.backgroundMusicOptions[Math.floor(Math.random() * (this.backgroundMusicOptions.length -1))];
+    
+    this.backgroundMusic = new Howl({
+      src: [this.chosenBackgroundMusic],
+      loop: true,
+      volume: 0.45
+    }); 
+  }
+  play() {
+    this.backgroundMusic.play();
+  }
+  stop() {
+    this.backgroundMusic.stop();
+  }
 }

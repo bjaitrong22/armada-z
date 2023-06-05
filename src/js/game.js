@@ -9,8 +9,7 @@ import { Projectile } from "./projectile.js";
 import { Explosion } from "./explosion.js";
 import { GameMessage } from "./gameMessages.js";
 import { UI } from "./UI.js";
-import floatingStateMusic from './../assets/music/floatingState/throughSpace.ogg';
-import waitingMusic from './../assets/music/floatingState/enchantedTiki86.mp3';
+import { BackgroundMusic } from "./sounds.js";
 
 export class Game {
   constructor(width, height) {
@@ -62,9 +61,7 @@ export class Game {
     this.gameOver = false;
     this.lives = 5;
 
-    this.musicOptions = [floatingStateMusic, waitingMusic];
-    this.music = new Audio(this.musicOptions[Math.floor(Math.random() * this.musicOptions.length)]);
-    this.playMusic = false;
+    this.music = new BackgroundMusic();
     this.player.currentState =  this.player.states[0];
     this.player.currentState.enter();
 
@@ -75,6 +72,7 @@ export class Game {
     this.createReverseThrusterParticlePool();
     this.createExplosionPool();
     this.createProjectilePool();
+
   }
   setGameDimensions(width, height){
     this.width = width;
@@ -189,12 +187,6 @@ export class Game {
       this.gameOver = true;
     }
 
-    //music
-    if (this.playMusic) {
-      this.music.play();
-      this.music.volume = .45;
-    } else this.music.pause();
-
     // Periodically creates asteroids
     if (this.asteroidTimer > this.asteroidInterval){
       const asteroid = this.getAsteroid();
@@ -248,7 +240,9 @@ export class Game {
     // front projectile
     if (this.player.shoot){
       const projectile = this.getProjectile();
-      if (projectile) projectile.start();
+      if (projectile){
+        projectile.start();
+      } 
     }
 
     this.projectilePool.forEach((projectile) => {
@@ -300,7 +294,7 @@ export class Game {
             const explosion = this.getExplosion();
             if (explosion){
               explosion.start(dragonCannon.x, dragonCannon.y, dragonCannon.dx * -.90);
-              explosion.playExplosionSound = true;
+              explosion.explosionSound.play();
               this.score += 100;
               this.gameMessages.push(new GameMessage('KA-BAM! NEUTRALIIIZED!! +EZ100', dragonCannon.x, dragonCannon.y, this.width * .5 + 20, 50));
               dragonCannon.reset();
@@ -316,9 +310,9 @@ export class Game {
           if (this.checkCollision(destroyer, projectile)){
             const explosion = this.getExplosion();
             if (explosion){
+              explosion.explosionSound.play();
               this.score += 50; 
               explosion.start(destroyer.x, destroyer.y, destroyer.dx * -.90);
-              explosion.playExplosionSound = true;
               this.gameMessages.push(new GameMessage('KA-BOOM! +50', destroyer.x, destroyer.y, this.width * .5 + 20 , 50));
               destroyer.reset();
               projectile.reset();

@@ -1,6 +1,6 @@
 import { Floating, ForwardTravel, ReverseTravel, UpwardTravel, DownwardTravel, UpwardForwardTravel, UpwardBackTravel, DownwardForwardTravel, DownwardBackTravel } from "./playerStates";
-import engine1 from './../assets/audioEffects/ScatterNoise1.mp3';
 import { FrontWeaponSound } from "./sounds";
+import { ThrusterSound } from "./sounds";
 
 export class Player {
   constructor(game){
@@ -25,44 +25,15 @@ export class Player {
     this.maxDy = 4.5;
     this.states = [new Floating(this.game), new ForwardTravel(this.game), new ReverseTravel(this.game), new UpwardTravel(this.game), new DownwardTravel(this.game), new UpwardForwardTravel(this.game), new UpwardBackTravel(this.game), new DownwardForwardTravel(this.game), new DownwardBackTravel(this.game)];
     this.currentState = null;
-    
-    this.engineSound = new Audio(engine1);
-    this.frontWeaponSoundPool = [];
-    this.maxFrontWeaponSound = 50;
+
+    this.thrusterSound = new ThrusterSound();
+    this.frontWeaponSound = new FrontWeaponSound();
     this.shoot = false;
-    this.createFrontWeaponSoundPool();
   }
-  createFrontWeaponSoundPool(){
-    for (let i = 0; i < this.maxFrontWeaponSound; i++){
-      this.frontWeaponSoundPool.push(new FrontWeaponSound());
-      this.frontWeaponSoundPool[i].volume = .99;
-    }
-  }
-  getFrontWeaponSound(){
-    for (let i = 0; i < this.frontWeaponSoundPool.length; i++){
-      if (this.frontWeaponSoundPool[i].free){
-        return this.frontWeaponSoundPool[i];
-      }
-    }
-  }
+  
   update(input, deltaTime){
     this.currentState.handleInput(input);
-  
-    //engine thruster sound
-    if (this.dy !== 0 || this.dx !== 0){
-      this.engineSound.play();
-    } else this.engineSound.pause();
 
-    //front weapon sound
-    if (this.shoot){
-      const frontWeaponSound = this.getFrontWeaponSound();
-      if (frontWeaponSound){
-        frontWeaponSound.start();
-        frontWeaponSound.play();
-      }
-      frontWeaponSound.reset();
-    }
-    
     //horizontal movement
     this.x += this.dx;
     if (input.includes('ArrowLeft')){
