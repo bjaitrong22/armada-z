@@ -215,7 +215,7 @@ Project 9: Final endless runner game with all the features
   * chrome limits the number of media player per page so you may get the following message:
   <mark>"Blocked attempt to create a WebMediaPlayer as there are too many WebMediaPlayers already in existence"<mark>.
   * The other known issue is the "Uncaught(in promise) DOMException:play() failed because the user didn't interac witht the document first.
-  * If you are using a more current version of Node.js such as node.js 18.16.0 LTS and 20.3.0 Current, you will get the following error because of webpack4:
+  * If you are using a more current version of Node.js such as node.js 18.16.0 LTS and 20.3.0 Current, you will get the following error because of <em>webpack4</em>:
 
   "ERR_OSSL_EVP_UNSUPPORTED Error in Node.js"
 
