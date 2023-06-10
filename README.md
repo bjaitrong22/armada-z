@@ -3,6 +3,7 @@
 Armada-Z
 
 ## `Brief Description`
+
 Spaceship shooting game with one player ship and two enemy ships. The game is playable, but is not complete.
 
 Keys for controlling the player ship:
@@ -21,45 +22,46 @@ Keys for controlling the player ship:
 By Bai Jaitrong
 
 ## `Technologies Used`
-  * HTML
-  * Canvas
-  * CSS
-  * JavaScrip
-  * Webpack
-  * Node.js 18.7.0
-  * Node Package manager (npm) 8.15.0
-  * package.json
-  * webpack 4.46.0
-  * webpack-cli 3.3.12
-  * style-loader 1.3.0
-  * htmlWebpackPlugin 4.5.2
-  * cleanWebpackPlugin 3.0.0
-  * webpack Developement Server 3.11.3
-  * ESLint 8.18.0
-  * eslint webpack plugin 2.7.0
+
+- HTML
+- Canvas
+- CSS
+- JavaScrip
+- Webpack
+- Node.js 18.7.0
+- Node Package manager (npm) 8.15.0
+- package.json
+- webpack 4.46.0
+- webpack-cli 3.3.12
+- style-loader 1.3.0
+- htmlWebpackPlugin 4.5.2
+- cleanWebpackPlugin 3.0.0
+- webpack Developement Server 3.11.3
+- ESLint 8.18.0
+- eslint webpack plugin 2.7.0
 
 ## `Assets`
 
- Assets downloaded from OpenGameArt.Org and Franks Laboratory/FreeCodeCamp.org. Some required CopyRight/Attribution Notice.
+Assets downloaded from OpenGameArt.Org and Franks Laboratory/FreeCodeCamp.org. Some required CopyRight/Attribution Notice.
 
 ### Audio
 
 **engine.wav 1-3**:
-Copyright/Attribution Notice: 
+Copyright/Attribution Notice:
 Space ship engine sounds by Tuomo Untinen
 
 https://opengameart.org/content/space-ship-engine-sounds
 
 **facility_breach_siren.wav**:
-Copyright/Attribution Notice: 
+Copyright/Attribution Notice:
 "Facility Breach Siren" by FiveBrosStopMosYT, licensed CC-by-4.0/3.0/OGA-by-3.0
 
 https://opengameart.org/content/facility-alert-siren
 
 **hjm-big_explosion_3.wav**:
-Copyright/Attribution Notice: 
+Copyright/Attribution Notice:
 For attribution, please state my name, Hansjörg Malthaner, and link here: http://opengameart.org/users/varkalandar
-File(s): 
+File(s):
 
 https://opengameart.org/content/big-low-frequency-explosion-boom
 
@@ -68,21 +70,23 @@ Artist/owner did not request to be credited or a copyRight/Attribution Notice. L
 https://opengameart.org/content/muffled-distant-explosion
 
 ### Music
+
 **enchantedTiki86.mp3**:
-Copyright/Attribution Notice: 
+Copyright/Attribution Notice:
 Give credit to cynicmusic.com if you want
-File(s):  
+File(s):
 
 https://opengameart.org/content/enchanted-tiki-86
 
 **throughSpace.ogg**:
 Artist/owner did not request to be credited or a copyRight/Attribution Notice. Link to the source is below:
-Author: 
+Author:
 maxstack
 
 https://opengameart.org/content/through-space
 
 ### Asteroids:
+
 Asteroids: bevouliin Imaginary perception, free via Frank’s Laboratory for educational purposes.
 
 http://bevouliin.com
@@ -102,7 +106,7 @@ provided by Frank's laboratory and FreeCodeCamp.org via YouTube tutorial.
 https://youtu.be/Pm8srmWUCY0
 
 **the explosion Frames, GIF, Sprite Sheet**:
-Copyright/Attribution Notice: 
+Copyright/Attribution Notice:
 Please If U Like My work Don't hesitate and Give me Credit about that. Its help me to Submit my work here. I m Hungry about Name Fame and of course Money Thanks
 
 https://opengameart.org/content/explosion-4
@@ -120,7 +124,7 @@ https://opengameart.org/content/arcane-magic-effect
 ### Ships
 
 **Biomech Dragon Cannon**:
-Copyright/Attribution Notice: 
+Copyright/Attribution Notice:
 Credit MetaShinryu, Surt and Daniel Cook if you plan on using it.
 
 https://opengameart.org/content/biomech-dragon-cannon
@@ -136,7 +140,7 @@ https://opengameart.org/content/isometric-spaceship-sprites-2
 https://opengameart.org/content/isometric-spaceship-sprites-3
 
 **dragon-sprite**:
-Copyright/Attribution Notice: 
+Copyright/Attribution Notice:
 If you need to use it in your personal project, credit me as Gumichan01.
 
 https://opengameart.org/content/the-green-dragon
@@ -149,80 +153,104 @@ https://opengameart.org/content/space-ships-side-scroller
 **Warp Effect**:
 Artist/owner did not request to be credit or a copyRight/Attribution Notice. Link to the source is below:
 
-
-
 https://opengameart.org/content/warp-effect
 
-
-
 ## `Research & Planning Log`
+
 #### Thursday, 04/06/2023
-* 10:20 am: research video gaming creation process
-* 01:36 pm: research three.js and react-three-fiber for 3D animation
-* 08:20 pm: research three.Js
+
+- 10:20 am: research video gaming creation process
+- 01:36 pm: research three.js and react-three-fiber for 3D animation
+- 08:20 pm: research three.Js
+
 #### Friday, 04/07/2023
-* 12:40 pm: research react-three-fiber.
+
+- 12:40 pm: research react-three-fiber.
+
 #### Saturday, 04/08/2023
+
 8:30 am: reseach on three.js
 4:00 pm: research end for the day.
+
 #### Thursday, 04/20/2023
+
 3:15 pm: research add firebase to c# API.
-4:15 pm: research completed for the day. 
+4:15 pm: research completed for the day.
+
 #### Friday, 04/21/2023
+
 8:45 am: research game development YouTube tutorials.
 4:30 pm: review react main concept tutorial.
 5:30 pm: end of research for the day.
-### Sunday, 04/23/2023 
+
+### Sunday, 04/23/2023
+
 9:45 am: JavaScript Game Development tutorials
 11:24 pm: WIP: JavaScript Game Development tutorials
-## Tuesday, 4/25/2023 
-10 am to 12:44 Tutorial Project 5: Point & shoot game 
-## Wednesday, 4/26/2023 
-10 am - 6:00 pm 
+
+## Tuesday, 4/25/2023
+
+10 am to 12:44 Tutorial Project 5: Point & shoot game
+
+## Wednesday, 4/26/2023
+
+10 am - 6:00 pm
 Tutorial Project 7: Side - Scroller game with mobile support
-## Thursday, 4/27 
-10:am to 12:45 pm 
-Tutorial project 7: full screen tutorial 
-## Friday, 4/28 
+
+## Thursday, 4/27
+
+10:am to 12:45 pm
+Tutorial project 7: full screen tutorial
+
+## Friday, 4/28
+
 10 am - 2:15 am
-Tutorial project 8: state-management 
-## Tuesday, May 2 
-3:15 pm to 4:15 pm 
+Tutorial project 8: state-management
+
+## Tuesday, May 2
+
+3:15 pm to 4:15 pm
+
 ## Wednesday, May 3
+
 10:45 am to 7 pm
 Tutorial project 8: jumping state 10:45 a
-## Thursday, May 4 
-5 am to 10 pm 
+
+## Thursday, May 4
+
+5 am to 10 pm
 Project 9: Final endless runner game with all the features
- 
+
 ## Setup/Installation Requirements
 
-  1. Clone the repository to your desktop or a subdirectory in your desktop and using this link **https://github.com/bjaitrong22/armada-z-webpack5.git**
+1. Clone the repository to your desktop or a subdirectory in your desktop and using this link **https://github.com/bjaitrong22/armada-z-webpack5.git**
+
 
     * Be careful not to clone the repository inside a local repository. Otherwise, you will have a    nested git respository.
 
-  2. Navigate to the top level/root of the armada-z directory using your command line. 
-  3. Open the project using your text editor of your choosing.
-  4. To start a development server and view the project in your browser:
+2. Navigate to the top level/root of the armada-z directory using your command line.
+3. Open the project using your text editor of your choosing.
+4. To start a development server and view the project in your browser:
 
-     * Navigate to the top level/root of the armada-z directory using your command line.
-     * Run the command "npm install" to install the dependencies.
-     * Run the command "npm run build" to bundle the files.
-     * To start a development server, run the command "npm run start".
+   - Navigate to the top level/root of the armada-z directory using your command line.
+   - Run the command "npm install" to install the dependencies.
+   - Run the command "npm run build" to bundle the files.
+   - To start a development server, run the command "npm run start".
 
 ## Known Bugs
-  * If you change the Arrow key press from one key to another Arrow key, you may see a trail of particles from the ship. It may be a machine performance issue, but I am not sure. 
-  * chrome limits the number of media player per page so you may get the following message:
+
+- If you change the Arrow key press from one key to another Arrow key, you may see a trail of particles from the ship. It may be a machine performance issue, but I am not sure.
+- chrome limits the number of media player per page so you may get the following message:
   <mark>"Blocked attempt to create a WebMediaPlayer as there are too many WebMediaPlayers already in existence"<mark>.
-  * The other known issue is the "Uncaught(in promise) DOMException:play() failed because the user didn't interac witht the document first.
-  * If you are using a more current version of Node.js such as node.js 18.16.0 LTS and 20.3.0 Current, you will get the following error because of <em>webpack4</em>:
+- The other known issue is the "Uncaught(in promise) DOMException:play() failed because the user didn't interac witht the document first.
+- If you are using a more current version of Node.js such as node.js 18.16.0 LTS and 20.3.0 Current, you will get the following error because of <em>webpack4</em>:
 
-  "ERR_OSSL_EVP_UNSUPPORTED Error in Node.js"
+"ERR_OSSL_EVP_UNSUPPORTED Error in Node.js"
 
-  Below is the link to the updated code using webpack5 that should fix the issue:
-  
-  https://github.com/bjaitrong22/armada-z-webpack5.git
+Below is the link to the updated code using webpack5 that should fix the issue:
+
+https://github.com/bjaitrong22/armada-z-webpack5.git
 
 # License
- * Portfolio is licensed under the terms of GNU AFFERO GENERAL PUBLIC LICENS Version 3, 19 November 2007 ( change if you are using a different license)
 
+- Portfolio is licensed under the terms of GNU AFFERO GENERAL PUBLIC LICENS Version 3, 19 November 2007 ( change if you are using a different license)
