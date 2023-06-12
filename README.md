@@ -27,7 +27,6 @@ By Bai Jaitrong
 - Canvas
 - CSS
 - JavaScrip
-- Webpack
 - Node.js 18.7.0
 - Node Package manager (npm) 8.15.0
 - package.json
