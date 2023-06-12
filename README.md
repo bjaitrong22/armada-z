@@ -4,7 +4,7 @@ Armada-Z
 
 ## `Brief Description`
 
-Spaceship shooting game with one player ship and two enemy ships. The game is playable, but is not complete.
+Spaceship shooting game with one player ship and two enemy ship types, a destroyer and dragon cannone. The game is playable, but is not complete.
 
 Keys for controlling the player ship:
 
@@ -42,7 +42,7 @@ By Bai Jaitrong
 
 ## `Assets`
 
-Assets downloaded from OpenGameArt.Org and Franks Laboratory/FreeCodeCamp.org. Some required CopyRight/Attribution Notice.
+Assets downloaded from OpenGameArt.Org and Franks Laboratory/FreeCodeCamp.org. Some required CopyRight/Attribution Notices.
 
 ### Audio
 
@@ -223,8 +223,7 @@ Project 9: Final endless runner game with all the features
 
 ## Setup/Installation Requirements
 
-1. Clone the repository to your desktop or a subdirectory in your desktop and using this link **https://github.com/bjaitrong22/armada-z-webpack5.git**
-
+1. Clone the repository to your desktop or a subdirectory in your desktop and using this link **https://github.com/bjaitrong22/armada-z.git**
 
     * Be careful not to clone the repository inside a local repository. Otherwise, you will have a    nested git respository.
 
